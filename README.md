@@ -1,5 +1,11 @@
 # Grupo 1 - Agenda de turnos
 
+### Integrantes
+> - Capelli, Ricardo Armando	<ricki.capelli@gmail.com>
+> - Krug, Alan Facundo	<akrug@ort.edu.ar>
+> - Muñoz, Santiago Marcos Luis	<santiagomlmunoz@gmail.com>
+> - Nevado, Santiago Ariel	<nevadosantiago97@gmail.com>
+
 ### Idea
 La siguiente agenda será modelada para un centro odontológico. 
 Este consultorio es muy flexible con respecto al uso de consultorios, profesionales y duración de las prestaciones. 
@@ -43,4 +49,4 @@ Este consultorio es muy flexible con respecto al uso de consultorios, profesiona
  - Los profesionales puede listar los turnos realizados en el mes calendario y le indican la remuneración que recibirán en base al valor que tienen descrito para la prestación.
  - Los turnos pueden ser confirmados que se tomaron (comienza la prestación) dentro de una ventana de +-15 minutos de la hora de inicio. 
  - No se pueden solapar turnos/profesionales/consultorios 
- - Se tiene que poder visualizar la disponibilidad por consultorio  
+ - Se tiene que poder visualizar la disponibilidad por consultorio 
