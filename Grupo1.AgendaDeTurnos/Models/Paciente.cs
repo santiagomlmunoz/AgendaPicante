@@ -10,7 +10,7 @@ namespace Grupo1.AgendaDeTurnos.Models
     {
         public List<Turno> turnos { get; set; }
 
-        public Paciente(string nombre, string apellido, string dni, Rol rol) : base(nombre, apellido, dni, rol)
+        public Paciente(string nombre, string apellido, string dni, Rol rol)
         {
             turnos = new List<Turno>();
         }
