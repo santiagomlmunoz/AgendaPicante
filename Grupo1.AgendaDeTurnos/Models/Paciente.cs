@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 namespace Grupo1.AgendaDeTurnos.Models
 {
 
-    public class Paciente
+    public class Paciente : Usuario
     {
-        public List<Turno> turnos { get; set; }
+        public List<Turno> Turnos { get; set; }
 
-        public Paciente(string nombre, string apellido, string dni, Rol rol)
+        public Paciente(string nombre, string apellido, string dni, Rol rol) : base(nombre,apellido,dni,rol)
         {
-            turnos = new List<Turno>();
+            Turnos = new List<Turno>();
         }
-        public void solicitarTurno()
+        public void SolicitarTurno()
         {
 
         }

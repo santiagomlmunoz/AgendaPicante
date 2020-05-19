@@ -7,16 +7,16 @@ namespace Grupo1.AgendaDeTurnos.Models
 {
     public class Consultorio
     {
-        private int idConsultorio;
-        public string nombre { get; set; }
-        private List<Disponibilidad> disponibilidades;
-        private List<Turno> turnos;
+        public int IdConsultorio;
+        public string Nombre { get; set; }
+        public List<Disponibilidad> Disponibilidades { get; set; };
+        public List<Turno> Turnos { get; set; }
 
         public Consultorio(string nombre)
         {
-            this.nombre = nombre;
-            disponibilidades = new List<Disponibilidad>();
-            turnos = new List<Turno>();
+            Nombre = nombre;
+            Disponibilidades = new List<Disponibilidad>();
+            Turnos = new List<Turno>();
         }
 
     }

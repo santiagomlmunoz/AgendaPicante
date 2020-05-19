@@ -7,14 +7,14 @@ namespace Grupo1.AgendaDeTurnos.Models
 {
     public class Prestacion
     {
-        private int idPrestacion;
-        public string nombre { get; set; }
-        public int duracionMinutos { get; set; }
+        public int IdPrestacion;
+        public string Nombre { get; set; }
+        public int DuracionMinutos { get; set; }
 
         public Prestacion(string nombre, int duracionMinutos)
         {
-            this.nombre = nombre;
-            this.duracionMinutos = duracionMinutos;
+            this.Nombre = nombre;
+            this.DuracionMinutos = duracionMinutos;
         }
     }
 

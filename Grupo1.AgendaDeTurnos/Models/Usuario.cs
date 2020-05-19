@@ -6,26 +6,26 @@ using System.Threading.Tasks;
 namespace Grupo1.AgendaDeTurnos.Models
 {
 
-    public class Usuario
+    public abstract class Usuario
     {
-        private int idUsuario;
-        private string nombre;
-        private string apellido;
-        private string dni;
-        private List<string> direcciones;
-        private List<string> telefonos;
-        private List<string> mails;
-        private Rol rol;
+        public int IdUsuario { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Dni { get; set; }
+        public List<Direccion> Direcciones { get; set; }
+        public List<Telefono> Telefonos { get; set; }
+        public List<Mail> Mails { get; set; }
+        public Rol Rol { get; set; }
 
         public Usuario(string nombre, string apellido, string dni, Rol rol)
         {
-            this.nombre = nombre;
-            this.apellido = apellido;
-            this.dni = dni;
-            this.rol = rol;
-            this.direcciones = new List<string>();
-            this.telefonos = new List<string>();
-            this.mails = new List<string>();
+            this.Nombre = nombre;
+            this.Apellido = apellido;
+            this.Dni = dni;
+            this.Rol = rol;
+            this.Direcciones = new List<Direccion>();
+            this.Telefonos = new List<Telefono>();
+            this.Mails = new List<Mail>();
         }
     }
 

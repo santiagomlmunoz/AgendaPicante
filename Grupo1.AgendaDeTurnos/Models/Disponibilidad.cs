@@ -7,16 +7,16 @@ namespace Grupo1.AgendaDeTurnos.Models
 {
     public class Disponibilidad
     {
-        private int idDisponibilidad;
-        public int horaDesde { get; set; }
-        public int horaHasta { get; set; }
-        public Dia dia { get; set; }
+        public int IdDisponibilidad;
+        public int HoraDesde { get; set; }
+        public int HoraHasta { get; set; }
+        public DateTime Dia { get; set; }
 
-        public Disponibilidad(Dia dia, int horaDesde, int horaHasta)
+        public Disponibilidad(DateTime dia, int horaDesde, int horaHasta)
         {
-            this.dia = dia;
-            this.horaDesde = horaDesde;
-            this.horaHasta = horaHasta;
+            this.Dia = dia;
+            this.HoraDesde = horaDesde;
+            this.HoraHasta = horaHasta;
         }
     }
 }

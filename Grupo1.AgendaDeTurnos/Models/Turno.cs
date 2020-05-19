@@ -7,22 +7,22 @@ namespace Grupo1.AgendaDeTurnos.Models
 {
     public class Turno
     {
-        private int idTurno;
-        public DateTime fecha { set; get; }
-        public int hora { set; get; }
-        public bool estado { set; get; }
-        public Paciente paciente { set; get; }
-        public Profesional profesional { set; get; }
-        public Consultorio consultorio { set; get; }
+        public int IdTurno;
+        public DateTime Fecha { set; get; }
+        public int Hora { set; get; }
+        public bool Estado { set; get; }
+        public Paciente Paciente { set; get; }
+        public Profesional Profesional { set; get; }
+        public Consultorio Consultorio { set; get; }
 
         public Turno(DateTime fecha, int hora, bool estado, Paciente paciente, Profesional profesional, Consultorio consultorio)
         {
-            this.fecha = fecha;
-            this.hora = hora;
-            this.estado = estado;
-            this.paciente = paciente;
-            this.profesional = profesional;
-            this.consultorio = consultorio;
+            this.Fecha = fecha;
+            this.Hora = hora;
+            this.Estado = estado;
+            this.Paciente = paciente;
+            this.Profesional = profesional;
+            this.Consultorio = consultorio;
         }
     }
 

@@ -8,25 +8,25 @@ namespace Grupo1.AgendaDeTurnos.Models
 
     public class Profesional : Usuario
     {
-        private List<Disponibilidad> disponibilidades;
-        private Prestacion prestacion;
-        private List<Turno> turnos;
+        public List<Disponibilidad> Disponibilidades { get; set; }
+        public Prestacion Prestacion { get; set; }
+        public List<Turno> Turnos { get; set; }
 
         public Profesional(string nombre, string apellido, string dni, Rol rol, Prestacion prestacion) : base(nombre, apellido, dni, rol)
         {
-            this.prestacion = prestacion;
-            this.turnos = new List<Turno>();
+            this.Prestacion = prestacion;
+            this.Turnos = new List<Turno>();
         }
 
 
-        public void agregarDisponibilidad(Disponibilidad disponibilidad)
+        public void AgregarDisponibilidad(Disponibilidad disponibilidad)
         {
-            this.disponibilidades.Add(disponibilidad);
+            this.Disponibilidades.Add(disponibilidad);
         }
 
-        public void asignarTurno(Turno turno)
+        public void AsignarTurno(Turno turno)
         {
-            this.turnos.Add(turno);
+            this.Turnos.Add(turno);
         }
     }
 
