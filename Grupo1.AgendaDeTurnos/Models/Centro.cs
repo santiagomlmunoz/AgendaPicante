@@ -31,15 +31,6 @@ namespace Grupo1.AgendaDeTurnos.Models
         public List<Disponibilidad> Disponibilidades { get; set; }
         public List<Paciente> Pacientes { get; set; }
 
-        public Centro(string nombre, string direccion)
-        {
-            this.Nombre = nombre;
-            this.Direccion = direccion;
-            this.Profesionales = new List<Profesional>();
-            this.Disponibilidades = new List<Disponibilidad>();
-            this.Pacientes = new List<Paciente>();
-
-        }
     }
 
 }
