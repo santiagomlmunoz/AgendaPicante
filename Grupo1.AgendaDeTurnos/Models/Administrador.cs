@@ -9,6 +9,7 @@ namespace Grupo1.AgendaDeTurnos.Models
 
     public class Administrador : Usuario
     {
+
         public Administrador(string nombre, string apellido, string dni, Rol rol) : base(nombre, apellido, dni, rol) { }
         public Paciente CrearPaciente(string nombre, string apellido, string dni, Rol rol)
         {
