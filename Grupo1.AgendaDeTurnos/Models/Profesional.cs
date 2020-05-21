@@ -27,11 +27,11 @@ namespace Grupo1.AgendaDeTurnos.Models
         public Centro Centro { get; set; }
 
 
-        public Profesional(string nombre, string apellido, string dni, Rol rol, Prestacion prestacion) : base(nombre, apellido, dni, rol)
-        {
-            this.Prestacion = prestacion;
-            this.Turnos = new List<Turno>();
-        }
+        //public Profesional(string nombre, string apellido, string dni, Rol rol, Prestacion prestacion) : base(nombre, apellido, dni, rol)
+        //{
+        //    this.Prestacion = prestacion;
+        //    this.Turnos = new List<Turno>();
+        //}
 
 
         public void AgregarDisponibilidad(Disponibilidad disponibilidad)

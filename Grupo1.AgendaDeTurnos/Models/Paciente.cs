@@ -13,10 +13,10 @@ namespace Grupo1.AgendaDeTurnos.Models
     
         public List<Turno> Turnos { get; set; }
 
-        public Paciente(string nombre, string apellido, string dni, Rol rol) : base(nombre,apellido,dni,rol)
-        {
-            Turnos = new List<Turno>();
-        }
+        //public Paciente(string nombre, string apellido, string dni, Rol rol) : base(nombre,apellido,dni,rol)
+        //{
+        //    Turnos = new List<Turno>();
+        //}
         public void SolicitarTurno()
         {
 
