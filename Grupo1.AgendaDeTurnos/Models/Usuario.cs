@@ -28,9 +28,9 @@ namespace Grupo1.AgendaDeTurnos.Models
         public string Apellido { get; set; }
 
 
-        [Required(ErrorMessage = "La propiedad Dni es requerida")]
+        //[Required(ErrorMessage = "La propiedad Dni es requerida")]
         [Display(Name = "Dni")]
-        [RegularExpression("^[0 - 9]{8}$", ErrorMessage = "La propiedad Dni tiene que ser de 8 dígitos")]
+        [RegularExpression("[0-9]{8}", ErrorMessage = "La propiedad Dni tiene que ser de 8 dígitos")]
         public string Dni { get; set; }
 
 
