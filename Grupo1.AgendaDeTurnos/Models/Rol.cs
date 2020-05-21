@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace Grupo1.AgendaDeTurnos.Models
 {
-    public enum Rol
+    public class Rol
     {
-        ADMIN, PROFESIONAL, PACIENTE
+        [Key]
+        public int Id { get; set; }
+        public string Descripcion { get; set; }
     }
 }

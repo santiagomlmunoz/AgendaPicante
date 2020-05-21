@@ -10,7 +10,7 @@ namespace Grupo1.AgendaDeTurnos.Models
     public class Prestacion
     {
         [Key]
-        public int IdPrestacion { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "El campo es requerido")]
         [MaxLength(100, ErrorMessage = "La longitud máxima del campo es de 100 caracteres")]

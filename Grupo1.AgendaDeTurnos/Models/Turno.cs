@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace Grupo1.AgendaDeTurnos.Models
 {
     public class Turno
     {
-        public int IdTurno;
+        public int Id { get; set; }
         public DateTime Fecha { set; get; }
         public int Hora { set; get; }
         public bool Estado { set; get; }

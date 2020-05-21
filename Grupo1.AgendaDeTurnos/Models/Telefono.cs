@@ -4,6 +4,7 @@ namespace Grupo1.AgendaDeTurnos.Models
 {
     public class Telefono
     {
+        public int Id { get; set; }
 
         [Required]
         [MinLength(10, ErrorMessage = "El celular tiene diez números")]
