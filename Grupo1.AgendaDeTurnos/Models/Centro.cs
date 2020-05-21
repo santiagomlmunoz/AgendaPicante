@@ -9,18 +9,32 @@ namespace Grupo1.AgendaDeTurnos.Models
     public class Centro
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "El campo es requerido")]
+        [MaxLength(100, ErrorMessage = "La longitud máxima del campo es de 100 caracteres")]
+        [MinLength(2, ErrorMessage = "La longitud mínima del campo es de 2 caracteres")]
+        [RegularExpression("[A-Za-z áéíóú]*", ErrorMessage = "El campo solo admite letras")]
+        [Display(Name = "Nombre")]
         public string Nombre { get; set; }
+
+        [Required(ErrorMessage = "El campo es requerido")]
+        [MaxLength(100, ErrorMessage = "La longitud máxima del campo es de 100 caracteres")]
+        [MinLength(2, ErrorMessage = "La longitud mínima del campo es de 2 caracteres")]
+        [RegularExpression("[A-Za-z áéíóú]*", ErrorMessage = "El campo solo admite letras")]
+        [Display(Name = "Direccion")]
         public string Direccion { get; set; }
-        public string Telefono { get; set; }
+
+        [Required(ErrorMessage = "El campo es requerido")]
+
+        public List<Telefono> Telefonos { get; set; }
         public List<Profesional> Profesionales { get; set; }
         public List<Disponibilidad> Disponibilidades { get; set; }
         public List<Paciente> Pacientes { get; set; }
 
-        public Centro(string nombre, string direccion, string telefono)
+        public Centro(string nombre, string direccion)
         {
             this.Nombre = nombre;
             this.Direccion = direccion;
-            this.Telefono = telefono;
             this.Profesionales = new List<Profesional>();
             this.Disponibilidades = new List<Disponibilidad>();
             this.Pacientes = new List<Paciente>();
