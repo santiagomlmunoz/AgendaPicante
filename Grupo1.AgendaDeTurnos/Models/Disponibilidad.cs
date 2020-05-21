@@ -8,10 +8,23 @@ namespace Grupo1.AgendaDeTurnos.Models
 {
     public class Disponibilidad
     {
+        [Key]
         public int Id { get; set; }
-        public int HoraDesde { get; set; }
-        public int HoraHasta { get; set; }
+
+        [Required(ErrorMessage = "Debe ingresar una fecha")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Dia { get; set; }
+
+        [Required(ErrorMessage = "Debe ingresar un horario de Inicio de cita")]
+        [DataType(DataType.Time)]
+        [DisplayFormat(DataFormatString = "{0:hh\\:mm}")]
+        public int HoraDesde { get; set; }
+
+        [Required(ErrorMessage = "Debe ingresar un horario de fin de cita")]
+        [DataType(DataType.Time)]
+        [DisplayFormat(DataFormatString = "{0:hh\\:mm}")]
+        public int HoraHasta { get; set; }
 
         public Disponibilidad(DateTime dia, int horaDesde, int horaHasta)
         {

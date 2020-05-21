@@ -8,6 +8,12 @@ namespace Grupo1.AgendaDeTurnos.Models
 {
     public class Mail
     {
+        [Key]
         public int Id { get; set; }
+
+        [Required (ErrorMessage = "Debe ingresar un email valido")]
+        [DataType(DataType.EmailAddress)]
+        [EmailAddress]
+        public string Descripcion { get; set; }
     }
 }
