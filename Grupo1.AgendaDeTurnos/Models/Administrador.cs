@@ -21,11 +21,7 @@ namespace Grupo1.AgendaDeTurnos.Models
         {
         }
 
-        public Centro CrearCentro(string nombre, string direccion, string telefono)
-        {
-            Centro c = new Centro(nombre, direccion, telefono);
-            return c;
-        }
+        
 
         public void BajaCentro()
         {
