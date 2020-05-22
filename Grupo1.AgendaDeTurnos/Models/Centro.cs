@@ -20,11 +20,10 @@ namespace Grupo1.AgendaDeTurnos.Models
         [Required(ErrorMessage = "El campo es requerido")]
         [MaxLength(100, ErrorMessage = "La longitud máxima del campo es de 100 caracteres")]
         [MinLength(2, ErrorMessage = "La longitud mínima del campo es de 2 caracteres")]
-        [RegularExpression("[A-Za-z áéíóú]*", ErrorMessage = "El campo solo admite letras")]
+        [RegularExpression("[A-Z/a-z]*", ErrorMessage = "El campo solo admite letras")]
         [Display(Name = "Direccion")]
         public string Direccion { get; set; }
 
-        [Required(ErrorMessage = "El campo es requerido")]
 
         public List<Telefono> Telefonos { get; set; }
         public List<Profesional> Profesionales { get; set; }

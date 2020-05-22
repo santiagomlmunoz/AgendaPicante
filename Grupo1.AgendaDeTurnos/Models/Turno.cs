@@ -14,15 +14,16 @@ namespace Grupo1.AgendaDeTurnos.Models
         [Display(Name = "Fecha")]
         [Required(ErrorMessage = "La propiedad Fecha es requerida")]
         [DataType(DataType.Date)]
-        public DateTime Fecha { set; get; }
+        public string Fecha { set; get; }
 
         [Display(Name = "Hora")]
         [Required(ErrorMessage = "La propiedad Hora es requerida")]
         [DataType(DataType.Time)]
-        public int Hora { set; get; }
+        public string Hora { set; get; }
 
-        [Display(Name = "Estado")]
+        [Display(Name = "Activo?")]
         [Required(ErrorMessage = "La propiedad Estado es requerida")]
+
         public bool Estado { set; get; }
 
 
