@@ -18,12 +18,12 @@ namespace Grupo1.AgendaDeTurnos.Models
 
         [ForeignKey("Prestacion")]
         [Display(Name = "Prestacion")]
-        public int IdPrestacion { get; set; }
+        public int PrestacionId { get; set; }
         public Prestacion Prestacion { get; set; }
 
         [ForeignKey("Centro")]
         [Display(Name = "Centro")]
-        public int IdCentro { get; set; }
+        public int CentroId { get; set; }
         public Centro Centro { get; set; }
 
 

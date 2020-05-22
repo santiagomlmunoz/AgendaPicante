@@ -22,7 +22,8 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         // GET: Centros
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Centros.ToListAsync());
+            var agendaDeTurnosDbContext = _context.Centros.Include(c => c.Direccion);
+            return View(await agendaDeTurnosDbContext.ToListAsync());
         }
 
         // GET: Centros/Details/5
@@ -34,6 +35,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             }
 
             var centro = await _context.Centros
+                .Include(c => c.Direccion)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (centro == null)
             {
@@ -46,6 +48,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         // GET: Centros/Create
         public IActionResult Create()
         {
+            ViewData["DireccionId"] = new SelectList(_context.Direcciones, "Id", "Altura");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Direccion")] Centro centro)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,DireccionId")] Centro centro)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["DireccionId"] = new SelectList(_context.Direcciones, "Id", "Altura", centro.DireccionId);
             return View(centro);
         }
 
@@ -78,6 +82,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             {
                 return NotFound();
             }
+            ViewData["DireccionId"] = new SelectList(_context.Direcciones, "Id", "Altura", centro.DireccionId);
             return View(centro);
         }
 
@@ -86,7 +91,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Direccion")] Centro centro)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,DireccionId")] Centro centro)
         {
             if (id != centro.Id)
             {
@@ -113,6 +118,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["DireccionId"] = new SelectList(_context.Direcciones, "Id", "Altura", centro.DireccionId);
             return View(centro);
         }
 
@@ -125,6 +131,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             }
 
             var centro = await _context.Centros
+                .Include(c => c.Direccion)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (centro == null)
             {

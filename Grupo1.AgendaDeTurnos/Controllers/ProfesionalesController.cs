@@ -49,8 +49,8 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         // GET: Profesionales/Create
         public IActionResult Create()
         {
-            ViewData["IdCentro"] = new SelectList(_context.Centros, "Id", "Direccion");
-            ViewData["IdPrestacion"] = new SelectList(_context.Prestaciones, "Id", "Nombre");
+            ViewData["CentroId"] = new SelectList(_context.Centros, "Id", "Nombre");
+            ViewData["PrestacionId"] = new SelectList(_context.Prestaciones, "Id", "DuracionMinutos");
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdPrestacion,IdCentro,Id,Nombre,Apellido,Dni")] Profesional profesional)
+        public async Task<IActionResult> Create([Bind("PrestacionId,CentroId,Id,Nombre,Apellido,Dni")] Profesional profesional)
         {
             if (ModelState.IsValid)
             {
@@ -67,8 +67,8 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdCentro"] = new SelectList(_context.Centros, "Id", "Direccion", profesional.IdCentro);
-            ViewData["IdPrestacion"] = new SelectList(_context.Prestaciones, "Id", "Nombre", profesional.IdPrestacion);
+            ViewData["CentroId"] = new SelectList(_context.Centros, "Id", "Nombre", profesional.CentroId);
+            ViewData["PrestacionId"] = new SelectList(_context.Prestaciones, "Id", "DuracionMinutos", profesional.PrestacionId);
             return View(profesional);
         }
 
@@ -85,8 +85,8 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdCentro"] = new SelectList(_context.Centros, "Id", "Direccion", profesional.IdCentro);
-            ViewData["IdPrestacion"] = new SelectList(_context.Prestaciones, "Id", "Nombre", profesional.IdPrestacion);
+            ViewData["CentroId"] = new SelectList(_context.Centros, "Id", "Nombre", profesional.CentroId);
+            ViewData["PrestacionId"] = new SelectList(_context.Prestaciones, "Id", "DuracionMinutos", profesional.PrestacionId);
             return View(profesional);
         }
 
@@ -95,7 +95,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdPrestacion,IdCentro,Id,Nombre,Apellido,Dni")] Profesional profesional)
+        public async Task<IActionResult> Edit(int id, [Bind("PrestacionId,CentroId,Id,Nombre,Apellido,Dni")] Profesional profesional)
         {
             if (id != profesional.Id)
             {
@@ -122,8 +122,8 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdCentro"] = new SelectList(_context.Centros, "Id", "Direccion", profesional.IdCentro);
-            ViewData["IdPrestacion"] = new SelectList(_context.Prestaciones, "Id", "Nombre", profesional.IdPrestacion);
+            ViewData["CentroId"] = new SelectList(_context.Centros, "Id", "Nombre", profesional.CentroId);
+            ViewData["PrestacionId"] = new SelectList(_context.Prestaciones, "Id", "DuracionMinutos", profesional.PrestacionId);
             return View(profesional);
         }
 

@@ -38,6 +38,13 @@ namespace Grupo1.AgendaDeTurnos.Controllers
 
         public void Seed()
         {
+           
+            var prestacion = new Prestacion
+            {
+                Nombre = "Odontologia General",
+                DuracionMinutos = "45",
+                Monto = 500
+            };
             var rol1 = new Rol
             {
                 Descripcion = "ADMINISTRADOR"
@@ -56,6 +63,15 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 Altura = "285",
                 Localidad = "CABA",
                 Provincia = "BUENOS AIRES"
+            };
+            var centro = new Centro
+            {
+                Nombre = "Centro Odontlogico",
+                Direccion = direCentro,
+                Pacientes = new List<Paciente>(),
+                Profesionales = new List<Profesional>(),
+                Telefonos = new List<Telefono>(),
+                Disponibilidades = new List<Disponibilidad>()
             };
             var paciente = new Paciente
             {
@@ -112,6 +128,51 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             {
                 Descripcion = "abc@abc3.com"
             };
+            var disp1 = new Disponibilidad
+            {
+                Dia ="LUNES", HoraDesde= "3",HoraHasta = "5"
+            };
+            var consultorio = new Consultorio
+            {
+                Disponibilidades = new List<Disponibilidad>(),
+                Nombre = "C005",
+                Turnos = new List<Turno>()
+            };
+            var profesional = new Profesional
+            {
+                Nombre = "Roberto",
+                Apellido= "Garcia",
+                Centro = centro,
+                Dni = "123123123",
+                Prestacion = prestacion,
+                Rol = rol3,
+                Mails = new List<Mail>(),
+                Turnos = new List<Turno>(),
+                Telefonos = new List<Telefono>(),
+                Direcciones = new List<Direccion>(),
+                Disponibilidades = new List<Disponibilidad>()
+            };
+            var turno = new Turno
+            {
+                Fecha = "21/05/2020",
+                Hora = "15",
+                Estado = true,
+                Consultorio = consultorio,
+                Paciente = paciente2,
+                Profesional = profesional
+             };
+           
+
+            profesional.Mails.Add(mail1);
+            profesional.Mails.Add(mail2);
+            profesional.Mails.Add(mail3);
+            profesional.Turnos.Add(turno);
+            profesional.Telefonos.Add(tel2);
+            profesional.Telefonos.Add(tel1);            
+            profesional.Direcciones.Add(direCentro);
+            profesional.Disponibilidades.Add(disp1);
+
+            consultorio.Disponibilidades.Add(disp1);
 
             paciente.Mails.Add(mail1);
             paciente2.Mails.Add(mail1);
@@ -126,13 +187,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             paciente3.Mails.Add(mail3);
 
             if (!_context.Prestaciones.Any()) 
-            {
-                var prestacion = new Prestacion
-                {
-                    Nombre = "Odontologia General",
-                    DuracionMinutos = "45",
-                    Monto = 500
-                };
+            {               
 
                 _context.Add(prestacion);
                 _context.SaveChanges();
@@ -149,16 +204,6 @@ namespace Grupo1.AgendaDeTurnos.Controllers
 
             if (!_context.Centros.Any())
             {      
-                var centro = new Centro
-                {
-                    Nombre = "Centro Odontlogico",
-                    Direccion = direCentro,
-                    Pacientes = new List<Paciente>(),
-                    Profesionales = new List<Profesional>(),
-                    Telefonos = new List<Telefono>(),
-                    Disponibilidades = new List<Disponibilidad>()                    
-                };
-
                 centro.Pacientes.Add(paciente);
                 centro.Pacientes.Add(paciente2);
                 centro.Pacientes.Add(paciente3);
@@ -172,6 +217,17 @@ namespace Grupo1.AgendaDeTurnos.Controllers
 
             }
 
+            if (!_context.Turnos.Any())
+            {
+                _context.Add(turno);
+                _context.SaveChanges();
+            }
+
+            if (!_context.Profesionales.Any())
+            {
+                _context.Add(profesional);
+                _context.SaveChanges();
+            }
 
 
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Grupo1.AgendaDeTurnos.Models
 {
@@ -24,6 +25,8 @@ namespace Grupo1.AgendaDeTurnos.Models
         //[Display(Name = "Direccion")]
         //public string Direccion { get; set; }
 
+        [ForeignKey("Direccion")]
+        [Display(Name = "Direccion")]
         public int DireccionId { get; set; }
         public Direccion Direccion { get; set; }
 
