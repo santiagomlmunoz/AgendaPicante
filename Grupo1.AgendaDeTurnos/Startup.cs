@@ -32,6 +32,19 @@ namespace Grupo1.AgendaDeTurnos
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+
+            {
+
+                //HAY QUE CAMBIAR LAS RUTAS
+                options.LoginPath = "/Home/Index";
+
+                options.AccessDeniedPath = "/Cuentas/Index";
+
+                options.LogoutPath = "/Cuentas/Index";
+
+            });
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -54,6 +67,7 @@ namespace Grupo1.AgendaDeTurnos
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
@@ -61,6 +75,7 @@ namespace Grupo1.AgendaDeTurnos
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            app.UseCookiePolicy();
         }
     }
 }
