@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Grupo1.AgendaDeTurnos.Models;
 using Grupo1.AgendaDeTurnos.Database;
+using Grupo1.AgendaDeTurnos.Extensions;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
@@ -78,33 +79,41 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 Nombre = "Pepe",
                 Apellido = "Paciente",
                 Dni = "123123123",
-                Rol = rol1,
+                Rol = RolesEnum.CLIENTE,
                 Direcciones = new List<Direccion>(),
                 Mails = new List<Mail>(),
                 Telefonos = new List<Telefono>(),
-                Turnos = new List<Turno>()
+                Turnos = new List<Turno>(),
+                Username = "elPepe",
+                Password = "1234".Encriptar()
             };
-            var paciente2 = new Paciente
+
+
+        var paciente2 = new Paciente
             {
                 Nombre = "Pepe2",
                 Apellido = "Paciente2",
                 Dni = "123123123",
-                Rol = rol2,
+                Rol = RolesEnum.CLIENTE,
                 Direcciones = new List<Direccion>(),
                 Mails = new List<Mail>(),
                 Telefonos = new List<Telefono>(),
-                Turnos = new List<Turno>()
-            };
+                Turnos = new List<Turno>(),
+                Username = "elPacienT",
+                Password = "soyPaciente".Encriptar()
+        };
             var paciente3 = new Paciente
             {
                 Nombre = "Pepe3",
                 Apellido = "Paciente3",
                 Dni = "123123123",
-                Rol = rol3,
+                Rol = RolesEnum.CLIENTE,
                 Direcciones = new List<Direccion>(),
                 Mails = new List<Mail>(),                
                 Telefonos = new List<Telefono>(),
-                Turnos = new List<Turno>()
+                Turnos = new List<Turno>(),
+                Username = "Duki",
+                Password = "goku".Encriptar()
             };
             var tel1 = new Telefono
             {
@@ -145,12 +154,14 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 Centro = centro,
                 Dni = "123123123",
                 Prestacion = prestacion,
-                Rol = rol3,
+                Rol = RolesEnum.PROFESIONAL,
                 Mails = new List<Mail>(),
                 Turnos = new List<Turno>(),
                 Telefonos = new List<Telefono>(),
                 Direcciones = new List<Direccion>(),
-                Disponibilidades = new List<Disponibilidad>()
+                Disponibilidades = new List<Disponibilidad>(),
+                Username = "elProfe",
+                Password = "soyProfe".Encriptar()
             };
             var turno = new Turno
             {
@@ -185,6 +196,8 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             paciente.Mails.Add(mail3);
             paciente2.Mails.Add(mail3);
             paciente3.Mails.Add(mail3);
+
+            
 
             if (!_context.Prestaciones.Any()) 
             {               
@@ -228,6 +241,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 _context.Add(profesional);
                 _context.SaveChanges();
             }
+            
 
 
         }

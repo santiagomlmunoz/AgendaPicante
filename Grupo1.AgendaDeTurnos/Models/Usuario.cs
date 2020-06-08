@@ -47,11 +47,11 @@ namespace Grupo1.AgendaDeTurnos.Models
 
 
         [Display(Name = "Rol")]
-        public Rol Rol { get; set; }
+        public RolesEnum Rol { get; set; }
         
         [Required]
         [MaxLength(50, ErrorMessage = "Longitud máxima de 50 caracteres")]
-        public string Username { get; internal set; }
+        public string Username { get; set; }
 
         [ScaffoldColumn(false)]
         public byte[] Password { get; set; }

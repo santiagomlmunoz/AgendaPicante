@@ -35,6 +35,11 @@ namespace Grupo1.AgendaDeTurnos.Database
 
         public DbSet<Turno> Turnos { get; set; }
 
+        internal void add(Usuario usuario)
+        {
+            throw new NotImplementedException();
+        }
+
         public DbSet<Usuario> Usuarios { get; set; }
     }
 }

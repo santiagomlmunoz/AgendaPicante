@@ -31,6 +31,18 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
+            public IActionResult Registrar()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Registrar(Paciente paciente)
+        {
+
+            _context.Add(paciente);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Ingresar");
+        }
 
         [AllowAnonymous]
         [HttpPost]
@@ -40,19 +52,18 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             {
                 Usuario usuario = _context.Usuarios.FirstOrDefault(usr => usr.Username == username);
                 var passwordEncriptada = password.Encriptar();
+                
 
-                if (usuario.Password.SequenceEqual(passwordEncriptada))
+                if (usuario!=null && usuario.Password.SequenceEqual(passwordEncriptada))
                 {
 
                     ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                     identity.AddClaim(new Claim(ClaimTypes.Name, username));
-                    identity.AddClaim(new Claim(ClaimTypes.Role, usuario.Rol.Descripcion));
+                    identity.AddClaim(new Claim(ClaimTypes.Role, usuario.Rol.ToString()));
                     ClaimsPrincipal principal = new ClaimsPrincipal(identity);
 
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
-                    _context.SaveChanges();
 
                     if (!string.IsNullOrWhiteSpace(returnUrl))
                         return Redirect(returnUrl);
@@ -63,11 +74,13 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 }
             }
 
-            // Completo estos dos campos para poder retornar a la vista en caso de errores.
+            //En caso de datos incorrectos
             ViewBag.Error = "Usuario o contraseña incorrectos";
             ViewBag.UserName = username;
             ViewBag.ReturnUrl = returnUrl;
 
             return View();
         }
+
     }
+}
