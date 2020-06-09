@@ -25,6 +25,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         {
             return View();
         }
+        [AllowAnonymous]
         public IActionResult Ingresar(string returnUrl)
         {
             //Se guardar URL
@@ -35,6 +36,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         {
             return View();
         }
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Registrar(Paciente paciente)
         {
@@ -42,6 +44,10 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             _context.Add(paciente);
             await _context.SaveChangesAsync();
             return RedirectToAction("Ingresar");
+        }
+        public IActionResult NoAutorizado()
+        {
+            return View();
         }
 
         [AllowAnonymous]
@@ -59,6 +65,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
 
                     ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                     identity.AddClaim(new Claim(ClaimTypes.Name, username));
+                    identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()));
                     identity.AddClaim(new Claim(ClaimTypes.Role, usuario.Rol.ToString()));
                     ClaimsPrincipal principal = new ClaimsPrincipal(identity);
 
@@ -80,6 +87,12 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             ViewBag.ReturnUrl = returnUrl;
 
             return View();
+        }
+        public async Task<IActionResult> Salir()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
     }

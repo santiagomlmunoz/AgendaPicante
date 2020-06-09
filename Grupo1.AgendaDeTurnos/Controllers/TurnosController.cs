@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Grupo1.AgendaDeTurnos.Database;
 using Grupo1.AgendaDeTurnos.Models;
+using System.Security.Claims;
+using System.Collections;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
@@ -58,6 +60,20 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         {
             if (ModelState.IsValid)
             {
+                int clienteId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                Paciente paciente = _context.Pacientes.Find(clienteId);
+                if(paciente.Turnos != null)
+                {
+                    paciente.Turnos.Add(turno);
+                }
+                else
+                {
+                    paciente.Turnos = new List<Turno>();
+                    paciente.Turnos.Add(turno);
+
+                }
+                
+                _context.Update(paciente);
                 _context.Add(turno);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -148,6 +164,17 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         private bool TurnoExists(int id)
         {
             return _context.Turnos.Any(e => e.Id == id);
+        }
+        public async Task<IActionResult> MisTurnos()
+        {
+            int clienteId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            Paciente paciente = _context.Pacientes.Find(clienteId);
+            List<Turno> turnos = _context
+                .Turnos
+                .Where(turno => turno.Paciente == paciente)
+                .ToList();
+
+            return View(turnos);
         }
     }
 }

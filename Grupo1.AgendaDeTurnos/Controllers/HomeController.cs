@@ -163,6 +163,18 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 Username = "elProfe",
                 Password = "soyProfe".Encriptar()
             };
+            var administrador = new Administrador
+            {
+                Nombre = "Cristofer",
+                Apellido = "Wallace",
+                Dni = "00000000001",
+                Rol = RolesEnum.ADMINISTRADOR,
+                Mails = new List<Mail>(),
+                Telefonos = new List<Telefono>(),
+                Direcciones = new List<Direccion>(),
+                Username = "soyAdmin",
+                Password = "soyAdmin".Encriptar()
+            };
             var turno = new Turno
             {
                 Fecha = "21/05/2020",
@@ -197,7 +209,9 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             paciente2.Mails.Add(mail3);
             paciente3.Mails.Add(mail3);
 
-            
+
+            _context.Administradores.Add(administrador);
+            _context.SaveChanges();
 
             if (!_context.Prestaciones.Any()) 
             {               

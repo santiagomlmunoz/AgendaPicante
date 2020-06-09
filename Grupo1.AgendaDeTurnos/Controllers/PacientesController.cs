@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Grupo1.AgendaDeTurnos.Database;
 using Grupo1.AgendaDeTurnos.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
@@ -20,12 +23,14 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         }
 
         // GET: Pacientes
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Pacientes.ToListAsync());
         }
 
         // GET: Pacientes/Details/5
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -54,6 +59,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,Dni")] Paciente paciente)
         {
             if (ModelState.IsValid)
@@ -149,5 +155,6 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         {
             return _context.Pacientes.Any(e => e.Id == id);
         }
+
     }
 }
