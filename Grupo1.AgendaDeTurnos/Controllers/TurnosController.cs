@@ -62,6 +62,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             {
                 int clienteId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
                 Paciente paciente = _context.Pacientes.Find(clienteId);
+                turno.Paciente = paciente;
                 if(paciente.Turnos != null)
                 {
                     paciente.Turnos.Add(turno);

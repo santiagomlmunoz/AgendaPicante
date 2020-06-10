@@ -84,7 +84,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 Mails = new List<Mail>(),
                 Telefonos = new List<Telefono>(),
                 Turnos = new List<Turno>(),
-                Username = "elPepe",
+                Username = "ELPEPE",
                 Password = "1234".Encriptar()
             };
 
@@ -99,7 +99,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 Mails = new List<Mail>(),
                 Telefonos = new List<Telefono>(),
                 Turnos = new List<Turno>(),
-                Username = "elPacienT",
+                Username = "ELPACIENT",
                 Password = "soyPaciente".Encriptar()
         };
             var paciente3 = new Paciente
@@ -112,7 +112,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 Mails = new List<Mail>(),                
                 Telefonos = new List<Telefono>(),
                 Turnos = new List<Turno>(),
-                Username = "Duki",
+                Username = "DUKI",
                 Password = "goku".Encriptar()
             };
             var tel1 = new Telefono
@@ -160,7 +160,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 Telefonos = new List<Telefono>(),
                 Direcciones = new List<Direccion>(),
                 Disponibilidades = new List<Disponibilidad>(),
-                Username = "elProfe",
+                Username = "ELPROFE",
                 Password = "soyProfe".Encriptar()
             };
             var administrador = new Administrador
@@ -172,7 +172,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 Mails = new List<Mail>(),
                 Telefonos = new List<Telefono>(),
                 Direcciones = new List<Direccion>(),
-                Username = "soyAdmin",
+                Username = "SOYADMIN",
                 Password = "soyAdmin".Encriptar()
             };
             var turno = new Turno

@@ -40,7 +40,9 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         [HttpPost]
         public async Task<IActionResult> Registrar(Paciente paciente)
         {
-
+            paciente.Rol = RolesEnum.CLIENTE;
+            paciente.Username = paciente.Username.ToUpper();
+            paciente.Password = paciente.nuevaPassword.Encriptar();
             _context.Add(paciente);
             await _context.SaveChangesAsync();
             return RedirectToAction("Ingresar");
@@ -56,6 +58,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         {
             if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
             {
+                username = username.ToUpper();
                 Usuario usuario = _context.Usuarios.FirstOrDefault(usr => usr.Username == username);
                 var passwordEncriptada = password.Encriptar();
                 

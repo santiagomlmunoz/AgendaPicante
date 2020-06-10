@@ -49,10 +49,16 @@ namespace Grupo1.AgendaDeTurnos.Models
         [Display(Name = "Rol")]
         public RolesEnum Rol { get; set; }
         
+        [Display(Name = "Usuario")]
         [Required]
         [MaxLength(50, ErrorMessage = "Longitud máxima de 50 caracteres")]
         public string Username { get; set; }
 
+        //CONSULTAR COMO HACER PARA GUARDAR UN STRING DEL FORM EN EL PASSWORD TYPE BYTE[]
+        [Display(Name = "Password")]
+        public string nuevaPassword { get; set; }
+
+        [Display(Name = "Password")]
         [ScaffoldColumn(false)]
         public byte[] Password { get; set; }
 
