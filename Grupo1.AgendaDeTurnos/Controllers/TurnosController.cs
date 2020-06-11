@@ -21,13 +21,11 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             _context = context;
         }
 
-        // GET: Turnos
         public async Task<IActionResult> Index()
         {
             return View(await _context.Turnos.ToListAsync());
         }
 
-        // GET: Turnos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,19 +43,16 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(turno);
         }
 
-        // GET: Turnos/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Turnos/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Fecha,Hora,Estado")] Turno turno)
+        public async Task<IActionResult> Create([Bind("Id,Fecha,Hora")] Turno turno)
         {
+            turno.Estado = true;
             if (ModelState.IsValid)
             {
                 int clienteId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -69,15 +64,17 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 }
                 else
                 {
-                    paciente.Turnos = new List<Turno>();
-                    paciente.Turnos.Add(turno);
+                    paciente.Turnos = new List<Turno>
+                    {
+                        turno
+                    };
 
                 }
                 
                 _context.Update(paciente);
                 _context.Add(turno);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("MisTurnos");
             }
             return View(turno);
         }

@@ -38,11 +38,16 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         }
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Registrar(Paciente paciente)
+        public async Task<IActionResult> Registrar(string password, Paciente paciente)
         {
             paciente.Rol = RolesEnum.CLIENTE;
-            paciente.Username = paciente.Username.ToUpper();
-            paciente.Password = paciente.nuevaPassword.Encriptar();
+            string username = paciente.Username.ToUpper();
+            if(validarUsuarioExiste(username)){
+                ViewBag.Error = "El usuario ya existe";
+                return View();
+            }
+            paciente.Username = username; //Le seteo el username en mayuscula
+            paciente.Password = password.Encriptar();
             _context.Add(paciente);
             await _context.SaveChangesAsync();
             return RedirectToAction("Ingresar");
@@ -50,6 +55,17 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         public IActionResult NoAutorizado()
         {
             return View();
+        }
+
+        private Boolean validarUsuarioExiste(string username)
+        {
+             Usuario usuario = _context.Usuarios.FirstOrDefault(usr => usr.Username == username);
+            if (usuario != null)
+            {
+                return true;
+            }else{
+                return false;
+            }
         }
 
         [AllowAnonymous]
