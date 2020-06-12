@@ -10,22 +10,23 @@ using Grupo1.AgendaDeTurnos.Models;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
-    public class PacientesController : Controller
+    public class ProfesionalsController : Controller
     {
         private readonly AgendaDeTurnosDbContext _context;
 
-        public PacientesController(AgendaDeTurnosDbContext context)
+        public ProfesionalsController(AgendaDeTurnosDbContext context)
         {
             _context = context;
         }
 
-        // GET: Pacientes
+        // GET: Profesionals
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pacientes.ToListAsync());
+            var agendaDeTurnosDbContext = _context.Profesionales.Include(p => p.Centro).Include(p => p.Prestacion);
+            return View(await agendaDeTurnosDbContext.ToListAsync());
         }
 
-        // GET: Pacientes/Details/5
+        // GET: Profesionals/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +34,45 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var paciente = await _context.Pacientes
+            var profesional = await _context.Profesionales
+                .Include(p => p.Centro)
+                .Include(p => p.Prestacion)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (paciente == null)
+            if (profesional == null)
             {
                 return NotFound();
             }
 
-            return View(paciente);
+            return View(profesional);
         }
 
-        // GET: Pacientes/Create
+        // GET: Profesionals/Create
         public IActionResult Create()
         {
+            ViewData["CentroId"] = new SelectList(_context.Centros, "Id", "Nombre");
+            ViewData["PrestacionId"] = new SelectList(_context.Prestaciones, "Id", "Nombre");
             return View();
         }
 
-        // POST: Pacientes/Create
+        // POST: Profesionals/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,Dni,Rol,Username")] Paciente paciente)
+        public async Task<IActionResult> Create([Bind("PrestacionId,CentroId,Id,Nombre,Apellido,Dni,Rol,Username")] Profesional profesional)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(paciente);
+                _context.Add(profesional);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(paciente);
+            ViewData["CentroId"] = new SelectList(_context.Centros, "Id", "Nombre", profesional.CentroId);
+            ViewData["PrestacionId"] = new SelectList(_context.Prestaciones, "Id", "Nombre", profesional.PrestacionId);
+            return View(profesional);
         }
 
-        // GET: Pacientes/Edit/5
+        // GET: Profesionals/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +80,24 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var paciente = await _context.Pacientes.FindAsync(id);
-            if (paciente == null)
+            var profesional = await _context.Profesionales.FindAsync(id);
+            if (profesional == null)
             {
                 return NotFound();
             }
-            return View(paciente);
+            ViewData["CentroId"] = new SelectList(_context.Centros, "Id", "Nombre", profesional.CentroId);
+            ViewData["PrestacionId"] = new SelectList(_context.Prestaciones, "Id", "Nombre", profesional.PrestacionId);
+            return View(profesional);
         }
 
-        // POST: Pacientes/Edit/5
+        // POST: Profesionals/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Apellido,Dni,Rol,Username")] Paciente paciente)
+        public async Task<IActionResult> Edit(int id, [Bind("PrestacionId,CentroId,Id,Nombre,Apellido,Dni,Rol,Username")] Profesional profesional)
         {
-            if (id != paciente.Id)
+            if (id != profesional.Id)
             {
                 return NotFound();
             }
@@ -97,12 +106,12 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             {
                 try
                 {
-                    _context.Update(paciente);
+                    _context.Update(profesional);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PacienteExists(paciente.Id))
+                    if (!ProfesionalExists(profesional.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +122,12 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(paciente);
+            ViewData["CentroId"] = new SelectList(_context.Centros, "Id", "Nombre", profesional.CentroId);
+            ViewData["PrestacionId"] = new SelectList(_context.Prestaciones, "Id", "Nombre", profesional.PrestacionId);
+            return View(profesional);
         }
 
-        // GET: Pacientes/Delete/5
+        // GET: Profesionals/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +135,32 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var paciente = await _context.Pacientes
+            var profesional = await _context.Profesionales
+                .Include(p => p.Centro)
+                .Include(p => p.Prestacion)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (paciente == null)
+            if (profesional == null)
             {
                 return NotFound();
             }
 
-            return View(paciente);
+            return View(profesional);
         }
 
-        // POST: Pacientes/Delete/5
+        // POST: Profesionals/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var paciente = await _context.Pacientes.FindAsync(id);
-            _context.Pacientes.Remove(paciente);
+            var profesional = await _context.Profesionales.FindAsync(id);
+            _context.Profesionales.Remove(profesional);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PacienteExists(int id)
+        private bool ProfesionalExists(int id)
         {
-            return _context.Pacientes.Any(e => e.Id == id);
+            return _context.Profesionales.Any(e => e.Id == id);
         }
     }
 }

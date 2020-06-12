@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Grupo1.AgendaDeTurnos.Models.Mail>
+﻿@model IEnumerable<Grupo1.AgendaDeTurnos.Models.Prestacion>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,10 +13,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
+                @Html.DisplayNameFor(model => model.Nombre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Usuario)
+                @Html.DisplayNameFor(model => model.DuracionHoras)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Monto)
             </th>
             <th></th>
         </tr>
@@ -25,10 +28,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
+                @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Usuario.Apellido)
+                @Html.DisplayFor(modelItem => item.DuracionHoras)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Monto)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

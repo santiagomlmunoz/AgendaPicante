@@ -1,11 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Grupo1.AgendaDeTurnos.Models
 {
     public class Telefono
     {
+        [Key]
         public int Id { get; set; }
 
+        [ForeignKey("Usuario")]
+        [Display(Name = "Usuario")]
+        public int IdUsuario { get; set; }
+        public Usuario Usuario { get; set; }
 
         [Display(Name = "Celular")]
         [Required]

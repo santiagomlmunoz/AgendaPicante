@@ -10,22 +10,22 @@ using Grupo1.AgendaDeTurnos.Models;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
-    public class PacientesController : Controller
+    public class DireccionsController : Controller
     {
         private readonly AgendaDeTurnosDbContext _context;
 
-        public PacientesController(AgendaDeTurnosDbContext context)
+        public DireccionsController(AgendaDeTurnosDbContext context)
         {
             _context = context;
         }
 
-        // GET: Pacientes
+        // GET: Direccions
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pacientes.ToListAsync());
+            return View(await _context.Direcciones.ToListAsync());
         }
 
-        // GET: Pacientes/Details/5
+        // GET: Direccions/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var paciente = await _context.Pacientes
+            var direccion = await _context.Direcciones
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (paciente == null)
+            if (direccion == null)
             {
                 return NotFound();
             }
 
-            return View(paciente);
+            return View(direccion);
         }
 
-        // GET: Pacientes/Create
+        // GET: Direccions/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Pacientes/Create
+        // POST: Direccions/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,Dni,Rol,Username")] Paciente paciente)
+        public async Task<IActionResult> Create([Bind("Id,Calle,Altura,Localidad,Provincia")] Direccion direccion)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(paciente);
+                _context.Add(direccion);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(paciente);
+            return View(direccion);
         }
 
-        // GET: Pacientes/Edit/5
+        // GET: Direccions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var paciente = await _context.Pacientes.FindAsync(id);
-            if (paciente == null)
+            var direccion = await _context.Direcciones.FindAsync(id);
+            if (direccion == null)
             {
                 return NotFound();
             }
-            return View(paciente);
+            return View(direccion);
         }
 
-        // POST: Pacientes/Edit/5
+        // POST: Direccions/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Apellido,Dni,Rol,Username")] Paciente paciente)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Calle,Altura,Localidad,Provincia")] Direccion direccion)
         {
-            if (id != paciente.Id)
+            if (id != direccion.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             {
                 try
                 {
-                    _context.Update(paciente);
+                    _context.Update(direccion);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PacienteExists(paciente.Id))
+                    if (!DireccionExists(direccion.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(paciente);
+            return View(direccion);
         }
 
-        // GET: Pacientes/Delete/5
+        // GET: Direccions/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var paciente = await _context.Pacientes
+            var direccion = await _context.Direcciones
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (paciente == null)
+            if (direccion == null)
             {
                 return NotFound();
             }
 
-            return View(paciente);
+            return View(direccion);
         }
 
-        // POST: Pacientes/Delete/5
+        // POST: Direccions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var paciente = await _context.Pacientes.FindAsync(id);
-            _context.Pacientes.Remove(paciente);
+            var direccion = await _context.Direcciones.FindAsync(id);
+            _context.Direcciones.Remove(direccion);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PacienteExists(int id)
+        private bool DireccionExists(int id)
         {
-            return _context.Pacientes.Any(e => e.Id == id);
+            return _context.Direcciones.Any(e => e.Id == id);
         }
     }
 }

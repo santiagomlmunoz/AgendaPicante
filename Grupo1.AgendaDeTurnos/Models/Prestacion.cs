@@ -9,6 +9,7 @@ namespace Grupo1.AgendaDeTurnos.Models
 {
     public class Prestacion
     {
+    
         [Key]
         public int Id { get; set; }
 
@@ -21,11 +22,11 @@ namespace Grupo1.AgendaDeTurnos.Models
 
 
         [Required(ErrorMessage = "El campo es requerido")]
-        [MaxLength(3, ErrorMessage = "La longitud máxima del campo es de 3 caracteres")]
-        [RegularExpression("[1-9]*", ErrorMessage = "El campo solo admite números")]
-        [Display(Name = "Duracion en minutos")]
-        public string DuracionMinutos { get; set; }
+        [MaxLength(2, ErrorMessage = "La longitud máxima del campo es de 3 caracteres")]
+        [Display(Name = "Duracion en horas")]
+        public int DuracionHoras { get; set; }
 
+        public List<Profesional> Profesionales { get; set; }
 
         [Required(ErrorMessage = "El campo es requerido")]
         [RegularExpression("[0-99999]*", ErrorMessage = "El monto debe ser numerico")]

@@ -22,7 +22,8 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         // GET: Mails
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Mails.ToListAsync());
+            var agendaDeTurnosDbContext = _context.Mails.Include(m => m.Usuario);
+            return View(await agendaDeTurnosDbContext.ToListAsync());
         }
 
         // GET: Mails/Details/5
@@ -34,6 +35,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             }
 
             var mail = await _context.Mails
+                .Include(m => m.Usuario)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (mail == null)
             {
@@ -46,6 +48,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         // GET: Mails/Create
         public IActionResult Create()
         {
+            ViewData["IdUsuario"] = new SelectList(_context.Set<Usuario>(), "Id", "Apellido");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Descripcion")] Mail mail)
+        public async Task<IActionResult> Create([Bind("Id,Descripcion,IdUsuario")] Mail mail)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdUsuario"] = new SelectList(_context.Set<Usuario>(), "Id", "Apellido", mail.IdUsuario);
             return View(mail);
         }
 
@@ -78,6 +82,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             {
                 return NotFound();
             }
+            ViewData["IdUsuario"] = new SelectList(_context.Set<Usuario>(), "Id", "Apellido", mail.IdUsuario);
             return View(mail);
         }
 
@@ -86,7 +91,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Descripcion")] Mail mail)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Descripcion,IdUsuario")] Mail mail)
         {
             if (id != mail.Id)
             {
@@ -113,6 +118,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdUsuario"] = new SelectList(_context.Set<Usuario>(), "Id", "Apellido", mail.IdUsuario);
             return View(mail);
         }
 
@@ -125,6 +131,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             }
 
             var mail = await _context.Mails
+                .Include(m => m.Usuario)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (mail == null)
             {

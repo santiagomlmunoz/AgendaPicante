@@ -10,22 +10,22 @@ using Grupo1.AgendaDeTurnos.Models;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
-    public class PacientesController : Controller
+    public class AdministradorsController : Controller
     {
         private readonly AgendaDeTurnosDbContext _context;
 
-        public PacientesController(AgendaDeTurnosDbContext context)
+        public AdministradorsController(AgendaDeTurnosDbContext context)
         {
             _context = context;
         }
 
-        // GET: Pacientes
+        // GET: Administradors
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pacientes.ToListAsync());
+            return View(await _context.Administradores.ToListAsync());
         }
 
-        // GET: Pacientes/Details/5
+        // GET: Administradors/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var paciente = await _context.Pacientes
+            var administrador = await _context.Administradores
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (paciente == null)
+            if (administrador == null)
             {
                 return NotFound();
             }
 
-            return View(paciente);
+            return View(administrador);
         }
 
-        // GET: Pacientes/Create
+        // GET: Administradors/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Pacientes/Create
+        // POST: Administradors/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,Dni,Rol,Username")] Paciente paciente)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,Dni,Rol,Username")] Administrador administrador)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(paciente);
+                _context.Add(administrador);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(paciente);
+            return View(administrador);
         }
 
-        // GET: Pacientes/Edit/5
+        // GET: Administradors/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var paciente = await _context.Pacientes.FindAsync(id);
-            if (paciente == null)
+            var administrador = await _context.Administradores.FindAsync(id);
+            if (administrador == null)
             {
                 return NotFound();
             }
-            return View(paciente);
+            return View(administrador);
         }
 
-        // POST: Pacientes/Edit/5
+        // POST: Administradors/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Apellido,Dni,Rol,Username")] Paciente paciente)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Apellido,Dni,Rol,Username")] Administrador administrador)
         {
-            if (id != paciente.Id)
+            if (id != administrador.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             {
                 try
                 {
-                    _context.Update(paciente);
+                    _context.Update(administrador);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PacienteExists(paciente.Id))
+                    if (!AdministradorExists(administrador.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(paciente);
+            return View(administrador);
         }
 
-        // GET: Pacientes/Delete/5
+        // GET: Administradors/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var paciente = await _context.Pacientes
+            var administrador = await _context.Administradores
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (paciente == null)
+            if (administrador == null)
             {
                 return NotFound();
             }
 
-            return View(paciente);
+            return View(administrador);
         }
 
-        // POST: Pacientes/Delete/5
+        // POST: Administradors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var paciente = await _context.Pacientes.FindAsync(id);
-            _context.Pacientes.Remove(paciente);
+            var administrador = await _context.Administradores.FindAsync(id);
+            _context.Administradores.Remove(administrador);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PacienteExists(int id)
+        private bool AdministradorExists(int id)
         {
-            return _context.Pacientes.Any(e => e.Id == id);
+            return _context.Administradores.Any(e => e.Id == id);
         }
     }
 }

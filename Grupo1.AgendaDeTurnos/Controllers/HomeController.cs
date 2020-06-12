@@ -43,20 +43,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             var prestacion = new Prestacion
             {
                 Nombre = "Odontologia General",
-                DuracionMinutos = "45",
                 Monto = 500
-            };
-            var rol1 = new Rol
-            {
-                Descripcion = "ADMINISTRADOR"
-            };
-            var rol2 = new Rol
-            {
-                Descripcion = "PACIENTE"
-            };
-            var rol3 = new Rol
-            {
-                Descripcion = "PROFESIONAL"
             };
             var direCentro = new Direccion
             {
@@ -64,15 +51,6 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 Altura = "285",
                 Localidad = "CABA",
                 Provincia = "BUENOS AIRES"
-            };
-            var centro = new Centro
-            {
-                Nombre = "Centro Odontlogico",
-                Direccion = direCentro,
-                Pacientes = new List<Paciente>(),
-                Profesionales = new List<Profesional>(),
-                Telefonos = new List<Telefono>(),
-                Disponibilidades = new List<Disponibilidad>()
             };
             var paciente = new Paciente
             {
@@ -137,21 +115,13 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             {
                 Descripcion = "abc@abc3.com"
             };
-            var disp1 = new Disponibilidad
-            {
-                Dia ="LUNES", HoraDesde= "3",HoraHasta = "5"
-            };
-            var consultorio = new Consultorio
-            {
-                Disponibilidades = new List<Disponibilidad>(),
-                Nombre = "C005",
-                Turnos = new List<Turno>()
-            };
+
+
             var profesional = new Profesional
             {
                 Nombre = "Roberto",
                 Apellido= "Garcia",
-                Centro = centro,
+             //   Centro = centro,
                 Dni = "123123123",
                 Prestacion = prestacion,
                 Rol = RolesEnum.PROFESIONAL,
@@ -175,27 +145,15 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 Username = "SOYADMIN",
                 Password = "soyAdmin".Encriptar()
             };
-            var turno = new Turno
-            {
-                Fecha = "21/05/2020",
-                Hora = "15",
-                Estado = true,
-                Consultorio = consultorio,
-                Paciente = paciente2,
-                Profesional = profesional
-             };
            
 
             profesional.Mails.Add(mail1);
             profesional.Mails.Add(mail2);
             profesional.Mails.Add(mail3);
-            profesional.Turnos.Add(turno);
             profesional.Telefonos.Add(tel2);
             profesional.Telefonos.Add(tel1);            
             profesional.Direcciones.Add(direCentro);
-            profesional.Disponibilidades.Add(disp1);
 
-            consultorio.Disponibilidades.Add(disp1);
 
             paciente.Mails.Add(mail1);
             paciente2.Mails.Add(mail1);
@@ -221,40 +179,6 @@ namespace Grupo1.AgendaDeTurnos.Controllers
 
             }
 
-            if (!_context.Roles.Any())
-            {                
-                _context.Add(rol1);
-                _context.Add(rol2);
-                _context.Add(rol3);
-                _context.SaveChanges();
-            }
-
-            if (!_context.Centros.Any())
-            {      
-                centro.Pacientes.Add(paciente);
-                centro.Pacientes.Add(paciente2);
-                centro.Pacientes.Add(paciente3);
-
-                centro.Telefonos.Add(tel1);
-                centro.Telefonos.Add(tel2);
-
-
-                _context.Add(centro);
-                _context.SaveChanges();
-
-            }
-
-            if (!_context.Turnos.Any())
-            {
-                _context.Add(turno);
-                _context.SaveChanges();
-            }
-
-            if (!_context.Profesionales.Any())
-            {
-                _context.Add(profesional);
-                _context.SaveChanges();
-            }
             
 
 

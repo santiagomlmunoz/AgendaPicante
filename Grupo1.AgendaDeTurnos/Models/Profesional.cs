@@ -10,8 +10,6 @@ namespace Grupo1.AgendaDeTurnos.Models
 
     public class Profesional : Usuario
     {
-
-
         public List<Disponibilidad> Disponibilidades { get; set; }
         
         public List<Turno> Turnos { get; set; }
@@ -25,13 +23,6 @@ namespace Grupo1.AgendaDeTurnos.Models
         [Display(Name = "Centro")]
         public int CentroId { get; set; }
         public Centro Centro { get; set; }
-
-
-        //public Profesional(string nombre, string apellido, string dni, Rol rol, Prestacion prestacion) : base(nombre, apellido, dni, rol)
-        //{
-        //    this.Prestacion = prestacion;
-        //    this.Turnos = new List<Turno>();
-        //}
 
 
         public void AgregarDisponibilidad(Disponibilidad disponibilidad)

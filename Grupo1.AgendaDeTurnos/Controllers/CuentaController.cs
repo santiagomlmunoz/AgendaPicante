@@ -59,7 +59,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
 
         private Boolean validarUsuarioExiste(string username)
         {
-             Usuario usuario = _context.Usuarios.FirstOrDefault(usr => usr.Username == username);
+             Usuario usuario = _context.Pacientes.FirstOrDefault(usr => usr.Username == username);
             if (usuario != null)
             {
                 return true;
@@ -75,7 +75,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
             {
                 username = username.ToUpper();
-                Usuario usuario = _context.Usuarios.FirstOrDefault(usr => usr.Username == username);
+                Usuario usuario = _context.Pacientes.FirstOrDefault(usr => usr.Username == username);
                 var passwordEncriptada = password.Encriptar();
                 
 

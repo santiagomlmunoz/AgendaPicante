@@ -1,4 +1,4 @@
-﻿@model Grupo1.AgendaDeTurnos.Models.Mail
+﻿@model Grupo1.AgendaDeTurnos.Models.Centro
 
 @{
     ViewData["Title"] = "Details";
@@ -7,20 +7,20 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Mail</h4>
+    <h4>Centro</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Descripcion)
+            @Html.DisplayNameFor(model => model.Nombre)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Descripcion)
+            @Html.DisplayFor(model => model.Nombre)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Usuario)
+            @Html.DisplayNameFor(model => model.Direccion)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Usuario.Apellido)
+            @Html.DisplayFor(model => model.Direccion.Altura)
         </dd>
     </dl>
 </div>

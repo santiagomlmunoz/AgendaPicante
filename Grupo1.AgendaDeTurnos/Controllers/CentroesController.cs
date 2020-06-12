@@ -10,22 +10,23 @@ using Grupo1.AgendaDeTurnos.Models;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
-    public class PacientesController : Controller
+    public class CentroesController : Controller
     {
         private readonly AgendaDeTurnosDbContext _context;
 
-        public PacientesController(AgendaDeTurnosDbContext context)
+        public CentroesController(AgendaDeTurnosDbContext context)
         {
             _context = context;
         }
 
-        // GET: Pacientes
+        // GET: Centroes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pacientes.ToListAsync());
+            var agendaDeTurnosDbContext = _context.Centros.Include(c => c.Direccion);
+            return View(await agendaDeTurnosDbContext.ToListAsync());
         }
 
-        // GET: Pacientes/Details/5
+        // GET: Centroes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +34,42 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var paciente = await _context.Pacientes
+            var centro = await _context.Centros
+                .Include(c => c.Direccion)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (paciente == null)
+            if (centro == null)
             {
                 return NotFound();
             }
 
-            return View(paciente);
+            return View(centro);
         }
 
-        // GET: Pacientes/Create
+        // GET: Centroes/Create
         public IActionResult Create()
         {
+            ViewData["DireccionId"] = new SelectList(_context.Direcciones, "Id", "Altura");
             return View();
         }
 
-        // POST: Pacientes/Create
+        // POST: Centroes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,Dni,Rol,Username")] Paciente paciente)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,DireccionId")] Centro centro)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(paciente);
+                _context.Add(centro);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(paciente);
+            ViewData["DireccionId"] = new SelectList(_context.Direcciones, "Id", "Altura", centro.DireccionId);
+            return View(centro);
         }
 
-        // GET: Pacientes/Edit/5
+        // GET: Centroes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +77,23 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var paciente = await _context.Pacientes.FindAsync(id);
-            if (paciente == null)
+            var centro = await _context.Centros.FindAsync(id);
+            if (centro == null)
             {
                 return NotFound();
             }
-            return View(paciente);
+            ViewData["DireccionId"] = new SelectList(_context.Direcciones, "Id", "Altura", centro.DireccionId);
+            return View(centro);
         }
 
-        // POST: Pacientes/Edit/5
+        // POST: Centroes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Apellido,Dni,Rol,Username")] Paciente paciente)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,DireccionId")] Centro centro)
         {
-            if (id != paciente.Id)
+            if (id != centro.Id)
             {
                 return NotFound();
             }
@@ -97,12 +102,12 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             {
                 try
                 {
-                    _context.Update(paciente);
+                    _context.Update(centro);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PacienteExists(paciente.Id))
+                    if (!CentroExists(centro.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +118,11 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(paciente);
+            ViewData["DireccionId"] = new SelectList(_context.Direcciones, "Id", "Altura", centro.DireccionId);
+            return View(centro);
         }
 
-        // GET: Pacientes/Delete/5
+        // GET: Centroes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +130,31 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var paciente = await _context.Pacientes
+            var centro = await _context.Centros
+                .Include(c => c.Direccion)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (paciente == null)
+            if (centro == null)
             {
                 return NotFound();
             }
 
-            return View(paciente);
+            return View(centro);
         }
 
-        // POST: Pacientes/Delete/5
+        // POST: Centroes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var paciente = await _context.Pacientes.FindAsync(id);
-            _context.Pacientes.Remove(paciente);
+            var centro = await _context.Centros.FindAsync(id);
+            _context.Centros.Remove(centro);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PacienteExists(int id)
+        private bool CentroExists(int id)
         {
-            return _context.Pacientes.Any(e => e.Id == id);
+            return _context.Centros.Any(e => e.Id == id);
         }
     }
 }

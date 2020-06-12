@@ -15,7 +15,6 @@ namespace Grupo1.AgendaDeTurnos.Database
 
         public DbSet<Centro> Centros { get; set; }
 
-        public DbSet<Consultorio> Consultorios { get; set; }
 
         public DbSet<Direccion> Direcciones { get; set; }
 
@@ -29,7 +28,6 @@ namespace Grupo1.AgendaDeTurnos.Database
 
         public DbSet<Profesional> Profesionales { get; set; }
 
-        public DbSet<Rol> Roles { get; set; }
 
         public DbSet<Telefono> Telefonos { get; set; }
 
@@ -40,6 +38,5 @@ namespace Grupo1.AgendaDeTurnos.Database
             throw new NotImplementedException();
         }
 
-        public DbSet<Usuario> Usuarios { get; set; }
     }
 }

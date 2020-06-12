@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Grupo1.AgendaDeTurnos.Models.Paciente>
+﻿@model IEnumerable<Grupo1.AgendaDeTurnos.Models.Profesional>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,6 +12,12 @@
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Prestacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Centro)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
             </th>
@@ -33,6 +39,12 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prestacion.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Centro.Nombre)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>

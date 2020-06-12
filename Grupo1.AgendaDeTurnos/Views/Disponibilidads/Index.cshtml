@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Grupo1.AgendaDeTurnos.Models.Paciente>
+﻿@model IEnumerable<Grupo1.AgendaDeTurnos.Models.Disponibilidad>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,19 +13,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Nombre)
+                @Html.DisplayNameFor(model => model.Dia)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Apellido)
+                @Html.DisplayNameFor(model => model.HoraDesde)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Dni)
+                @Html.DisplayNameFor(model => model.HoraHasta)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Rol)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Username)
+                @Html.DisplayNameFor(model => model.IdProfesional)
             </th>
             <th></th>
         </tr>
@@ -34,19 +31,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
+                @Html.DisplayFor(modelItem => item.Dia)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Apellido)
+                @Html.DisplayFor(modelItem => item.HoraDesde)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Dni)
+                @Html.DisplayFor(modelItem => item.HoraHasta)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Rol)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
+                @Html.DisplayFor(modelItem => item.IdProfesional)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
