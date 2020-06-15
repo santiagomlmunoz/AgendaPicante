@@ -7,14 +7,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Grupo1.AgendaDeTurnos.Database;
 using Grupo1.AgendaDeTurnos.Models;
+using Grupo1.AgendaDeTurnos.Extensions;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
-    public class ProfesionalsController : Controller
+    public class ProfesionalesController : Controller
     {
         private readonly AgendaDeTurnosDbContext _context;
 
-        public ProfesionalsController(AgendaDeTurnosDbContext context)
+        public ProfesionalesController(AgendaDeTurnosDbContext context)
         {
             _context = context;
         }
@@ -59,10 +60,13 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PrestacionId,CentroId,Id,Nombre,Apellido,Dni,Rol,Username")] Profesional profesional)
+        public async Task<IActionResult> Create([Bind("PrestacionId,CentroId,Id,Nombre,Apellido,Dni,Rol,Username")] Profesional profesional, string password)
         {
             if (ModelState.IsValid)
             {
+                profesional.Username = profesional.Username.ToUpper();
+                profesional.Password = password.Encriptar();
+                profesional.Rol = RolesEnum.PROFESIONAL;
                 _context.Add(profesional);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

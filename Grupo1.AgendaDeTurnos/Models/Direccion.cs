@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Grupo1.AgendaDeTurnos.Models
 {
@@ -23,7 +24,7 @@ namespace Grupo1.AgendaDeTurnos.Models
         [MinLength(1, ErrorMessage = "El dato debe ser numerico y no ser mayor a 99999")]
         [RegularExpression("[0-9]*", ErrorMessage = "El dato debe ser númerico.")]
         [Display(Name = "Altura")]
-        public string Altura { get; set; }
+        public int Altura { get; set; }
 
         [Required(ErrorMessage = "El campo es requerido")]
         [MaxLength(100, ErrorMessage = "La longitud máxima del campo es de 100 caracteres")]
@@ -38,6 +39,12 @@ namespace Grupo1.AgendaDeTurnos.Models
         [RegularExpression("[A-Z/a-z]*", ErrorMessage = "El campo solo admite letras")]
         [Display(Name = "Provincia")]
         public string Provincia { get; set; }
+
+        [ForeignKey("Usuario")]
+        [Display(Name = "Usuario")]
+        public int IdUsuario { get; set; }
+
+        public Usuario Usuario { get; set; }
 
 
 

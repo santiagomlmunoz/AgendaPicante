@@ -39,78 +39,56 @@
                             </li>
                             @if (User.IsInRole(nameof(RolesEnum.CLIENTE)))
                             {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Turnos" asp-action="MisTurnos">Mis turnos</a>
-                                </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Turnos" asp-action="MisTurnos">Mis turnos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Turnos" asp-action="NuevoTurno">Solicitar turno</a>
+                            </li>
                             }
                             @if (User.IsInRole(nameof(RolesEnum.PROFESIONAL)))
                             {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Turnos" asp-action="MiAgenda">Mi agenda</a>
-                                </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Turnos" asp-action="MiAgenda">Mi agenda</a>
+                            </li>
                             }
                             @if (User.IsInRole(nameof(RolesEnum.ADMINISTRADOR)))
                             {
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Administrar
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Profesionales" asp-action="Index">Profesionales</a>
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Pacientes" asp-action="Index">Pacientes</a>
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Administradores" asp-action="Index">Administradores</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Administrar
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Profesionales" asp-action="Index">Profesionales</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Pacientes" asp-action="Index">Pacientes</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Administradores" asp-action="Index">Administradores</a>
 
-                                    </div>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Centros" asp-action="Index">Centros</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Disponibilidades" asp-action="Index">Disponibilidades</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Prestaciones" asp-action="Index">Prestaciones</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Turnos" asp-action="Index">Turnos</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Consultorios" asp-action="Index">Consultorios</a>
-                                </li>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Centros" asp-action="Index">Centros</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Disponibilidades" asp-action="Index">Disponibilidades</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Prestaciones" asp-action="Index">Prestaciones</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Turnos" asp-action="Index">Turnos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Consultorios" asp-action="Index">Consultorios</a>
+                            </li>
                             }
-
-
-
-                            @if (false) //Lo dejo asi por si en algun momento lo tenemos que usar
-                            {
-                                <li class="nav-item dropdown">
-
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Carga Datos
-                                    </a>
-
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Telefonos" asp-action="Index">Telefonos</a>
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Mails" asp-action="Index">Mails</a>
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Direcciones" asp-action="Index">Direcciones</a>
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Consultorios" asp-action="Index">Consultorios</a>
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
-                                    </div>
-
-                                </li>
-                            }
-
-
                         </ul>
-
-
                     </div>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <ul class="nav navbar-nav pull-xs-right">
 
                             <li class="nav-item">
-                                <a class="btn btn-danger" asp-area="" asp-controller="Cuenta" asp-action="Salir">Salir</a>
+                                <a class="btn btn-danger" asp-area="" asp-controller="Cuentas" asp-action="Salir">Salir</a>
                             </li>
                         </ul>
                     }
@@ -119,11 +97,11 @@
                 <ul class="nav navbar-nav pull-xs-right">
 
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Cuenta" asp-action="Ingresar">Iniciar sesion</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Cuentas" asp-action="Ingresar">Iniciar sesion</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Cuenta" asp-action="Registrar">Registrarse</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Cuentas" asp-action="Registrar">Registrarse</a>
                     </li>
                 </ul>
                     }

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Grupo1.AgendaDeTurnos.Models.Turno>
+
+@{
+    ViewData["Title"] = "Mis turnos";
+}
+
+<h1>Mis turnos</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Profesional)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Centro)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+                @Html.DisplayFor(modelItem => item.Fecha.Hour)hs
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Profesional.Apellido)
+                @Html.DisplayFor(modelItem => item.Profesional.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Centro.Nombre)
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

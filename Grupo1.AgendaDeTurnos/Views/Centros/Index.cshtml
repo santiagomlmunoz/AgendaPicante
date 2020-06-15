@@ -28,7 +28,9 @@
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Direccion.Altura)
+                @Html.DisplayFor(modelItem => item.Direccion.Calle),
+                @Html.DisplayFor(modelItem => item.Direccion.Altura),
+                @Html.DisplayFor(modelItem => item.Direccion.Localidad)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

@@ -13,11 +13,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
-    public class CuentaController : Controller
+    public class CuentasController : Controller
     {
         private readonly AgendaDeTurnosDbContext _context;
 
-        public CuentaController(AgendaDeTurnosDbContext context)
+        public CuentasController(AgendaDeTurnosDbContext context)
         {
             _context = context;
         }
@@ -67,6 +67,24 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return false;
             }
         }
+        private Usuario getUsuarioLogueado(Usuario admin, Usuario prof, Usuario paciente)
+        {
+            Usuario user = null;
+            if(admin != null)
+            {
+                user = admin;
+                return user;
+            }else if(prof != null)
+            {
+                user = prof;
+                return user;
+            }else if(paciente != null)
+            {
+                user = paciente;
+                return user;
+            }
+            return user;
+        }
 
         [AllowAnonymous]
         [HttpPost]
@@ -75,10 +93,13 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
             {
                 username = username.ToUpper();
-                Usuario usuario = _context.Pacientes.FirstOrDefault(usr => usr.Username == username);
-                var passwordEncriptada = password.Encriptar();
-                
+                Usuario paciente = _context.Pacientes.FirstOrDefault(usr => usr.Username == username);
+                Usuario admin = _context.Administradores.FirstOrDefault(usr => usr.Username == username);
+                Usuario prof = _context.Profesionales.FirstOrDefault(usr => usr.Username == username);
 
+                Usuario usuario = getUsuarioLogueado(admin, prof, paciente);
+
+                var passwordEncriptada = password.Encriptar();
                 if (usuario!=null && usuario.Password.SequenceEqual(passwordEncriptada))
                 {
 

@@ -10,11 +10,11 @@ using Grupo1.AgendaDeTurnos.Models;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
-    public class AdministradorsController : Controller
+    public class AdministradoresController : Controller
     {
         private readonly AgendaDeTurnosDbContext _context;
 
-        public AdministradorsController(AgendaDeTurnosDbContext context)
+        public AdministradoresController(AgendaDeTurnosDbContext context)
         {
             _context = context;
         }

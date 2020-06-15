@@ -10,22 +10,22 @@ using Grupo1.AgendaDeTurnos.Models;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
-    public class DisponibilidadsController : Controller
+    public class PrestacionesController : Controller
     {
         private readonly AgendaDeTurnosDbContext _context;
 
-        public DisponibilidadsController(AgendaDeTurnosDbContext context)
+        public PrestacionesController(AgendaDeTurnosDbContext context)
         {
             _context = context;
         }
 
-        // GET: Disponibilidads
+        // GET: Prestacions
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Disponibilidades.ToListAsync());
+            return View(await _context.Prestaciones.ToListAsync());
         }
 
-        // GET: Disponibilidads/Details/5
+        // GET: Prestacions/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var disponibilidad = await _context.Disponibilidades
+            var prestacion = await _context.Prestaciones
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (disponibilidad == null)
+            if (prestacion == null)
             {
                 return NotFound();
             }
 
-            return View(disponibilidad);
+            return View(prestacion);
         }
 
-        // GET: Disponibilidads/Create
+        // GET: Prestacions/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Disponibilidads/Create
+        // POST: Prestacions/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Dia,HoraDesde,HoraHasta,IdProfesional")] Disponibilidad disponibilidad)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,DuracionHoras,Monto")] Prestacion prestacion)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(disponibilidad);
+                _context.Add(prestacion);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(disponibilidad);
+            return View(prestacion);
         }
 
-        // GET: Disponibilidads/Edit/5
+        // GET: Prestacions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var disponibilidad = await _context.Disponibilidades.FindAsync(id);
-            if (disponibilidad == null)
+            var prestacion = await _context.Prestaciones.FindAsync(id);
+            if (prestacion == null)
             {
                 return NotFound();
             }
-            return View(disponibilidad);
+            return View(prestacion);
         }
 
-        // POST: Disponibilidads/Edit/5
+        // POST: Prestacions/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Dia,HoraDesde,HoraHasta,IdProfesional")] Disponibilidad disponibilidad)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,DuracionHoras,Monto")] Prestacion prestacion)
         {
-            if (id != disponibilidad.Id)
+            if (id != prestacion.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             {
                 try
                 {
-                    _context.Update(disponibilidad);
+                    _context.Update(prestacion);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DisponibilidadExists(disponibilidad.Id))
+                    if (!PrestacionExists(prestacion.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(disponibilidad);
+            return View(prestacion);
         }
 
-        // GET: Disponibilidads/Delete/5
+        // GET: Prestacions/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var disponibilidad = await _context.Disponibilidades
+            var prestacion = await _context.Prestaciones
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (disponibilidad == null)
+            if (prestacion == null)
             {
                 return NotFound();
             }
 
-            return View(disponibilidad);
+            return View(prestacion);
         }
 
-        // POST: Disponibilidads/Delete/5
+        // POST: Prestacions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var disponibilidad = await _context.Disponibilidades.FindAsync(id);
-            _context.Disponibilidades.Remove(disponibilidad);
+            var prestacion = await _context.Prestaciones.FindAsync(id);
+            _context.Prestaciones.Remove(prestacion);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DisponibilidadExists(int id)
+        private bool PrestacionExists(int id)
         {
-            return _context.Disponibilidades.Any(e => e.Id == id);
+            return _context.Prestaciones.Any(e => e.Id == id);
         }
     }
 }

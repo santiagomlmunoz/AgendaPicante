@@ -32,13 +32,6 @@ namespace Grupo1.AgendaDeTurnos.Models
         [RegularExpression("[0-99999]*", ErrorMessage = "El monto debe ser numerico")]
         [Display(Name = "Monto")]
         public decimal Monto { get; set; }
-
-
-        //public Prestacion(string nombre, int duracionMinutos)
-        //{
-        //    this.Nombre = nombre;
-        //    this.DuracionMinutos = duracionMinutos;
-        //}
     }
 
 }
