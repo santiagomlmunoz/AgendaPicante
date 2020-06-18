@@ -14,7 +14,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="PrestacionId" class="control-label"></label>
-                <select asp-for="PrestacionId" class="form-control" asp-items="ViewBag.PrestacionId"></select>
+                <select asp-for="PrestacionId" name="" class="form-control" asp-items="ViewBag.PrestacionId"></select>
+            </div>
+            <div class="form-group">
+                <label  class="control-label">Disponibilidades</label>
+                <select multiple="multiple" name="listDias" class="multi-select" asp-items="ViewBag.Disponibilidades"></select>
             </div>
             <div class="form-group">
                 <label asp-for="CentroId" class="control-label"></label>
@@ -49,7 +53,21 @@
             </div>
         </form>
     </div>
+    <div class="col col-md-5">
+        <h2>Dias y horario disponible</h2>
+        <form asp-action="AgregarDisponibilidad">
+                <label class="control-label">Dia</label>
+                <select name="dia" class="form-control" asp-items="ViewBag.DiasSemana"></select>
+            
+            <label>Desde</label>
+            <input type="number" name="desde" />
+            <label>Hasta</label>
+            <input type="number" name="hasta" />
+            <input type="submit" />
+        </form>
+    </div>
 </div>
+
 
 <div>
     <a asp-action="Index">Back to List</a>

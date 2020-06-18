@@ -24,6 +24,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         public async Task<IActionResult> Index()
         {
             var agendaDeTurnosDbContext = _context.Profesionales.Include(p => p.Centro).Include(p => p.Prestacion);
+            var lista= _context.Profesionales.ToList();
             return View(await agendaDeTurnosDbContext.ToListAsync());
         }
 
@@ -49,28 +50,50 @@ namespace Grupo1.AgendaDeTurnos.Controllers
 
         // GET: Profesionals/Create
         public IActionResult Create()
+
         {
+            ViewData["Disponibilidades"] = new MultiSelectList(_context.Disponibilidades, "Id", "Descripcion");
+            ViewData["DiasSemana"] = new SelectList(Enum.GetValues(typeof(DiasEnum)).Cast<DiasEnum>());
             ViewData["CentroId"] = new SelectList(_context.Centros, "Id", "Nombre");
             ViewData["PrestacionId"] = new SelectList(_context.Prestaciones, "Id", "Nombre");
             return View();
         }
+        public IActionResult AgregarDisponibilidad(int desde, int hasta, DiasEnum dia)
+        {
+            Disponibilidad dis = new Disponibilidad(desde, hasta, dia);
+           _context.Disponibilidades.Add(dis);
+           _context.SaveChanges();
+
+            ViewData["Disponibilidades"] = new MultiSelectList(_context.Disponibilidades, "Id", "Descripcion");
+            return RedirectToAction(nameof(Create));
+        }
+        
 
         // POST: Profesionals/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PrestacionId,CentroId,Id,Nombre,Apellido,Dni,Rol,Username")] Profesional profesional, string password)
+        public async Task<IActionResult> Create([Bind("PrestacionId,CentroId,Id,Nombre,Apellido,Dni,Rol,Username")] Profesional profesional, string password, List<int> listDias)
         {
+            
             if (ModelState.IsValid)
             {
                 profesional.Username = profesional.Username.ToUpper();
                 profesional.Password = password.Encriptar();
                 profesional.Rol = RolesEnum.PROFESIONAL;
-                _context.Add(profesional);
+                profesional.Disponibilidades = new List<Disponibilidad>();
+                foreach(int index in listDias)
+                {
+                    Disponibilidad dis = await _context.Disponibilidades.FindAsync(index);
+                    profesional.Disponibilidades.Add(dis);
+                }
+                _context.Profesionales.Add(profesional);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["DiasSemana"] = new SelectList(Enum.GetValues(typeof(DiasEnum)).Cast<DiasEnum>());
+            ViewData["Disponibilidades"] = new SelectList(_context.Disponibilidades, "Id", "Nombre", profesional.Disponibilidades);
             ViewData["CentroId"] = new SelectList(_context.Centros, "Id", "Nombre", profesional.CentroId);
             ViewData["PrestacionId"] = new SelectList(_context.Prestaciones, "Id", "Nombre", profesional.PrestacionId);
             return View(profesional);

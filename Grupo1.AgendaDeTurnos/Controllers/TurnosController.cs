@@ -10,6 +10,7 @@ using Grupo1.AgendaDeTurnos.Models;
 using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http2.HPack;
 using System.Security.Claims;
 using System.Linq.Expressions;
+using Grupo1.AgendaDeTurnos.Extensions;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
@@ -83,7 +84,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             DateTime fechaYHoraDesde = turno.Fecha.AddHours(hora.Hour);
             int horaDesde = hora.Hour;
             DateTime fechaHasta = hora.AddHours(duracionPrestacion);
-            DayOfWeek dia = fechaYHoraDesde.DayOfWeek;
+            DiasEnum dia = GetDia.ObtenerDiaPorDayOfWeek(fechaYHoraDesde.DayOfWeek);
             int horaHasta = fechaHasta.Hour;
             if(fechaDeHoy > fechaYHoraDesde)
             {
@@ -172,6 +173,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             ViewBag.Error = "Ese horario NO se encuentra disponible";
             return View();
         }
+
 
         // GET: Turnoes/Details/5
         public async Task<IActionResult> Details(int? id)

@@ -72,7 +72,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(centro);
+           return View(centro);
         }
 
         // GET: Centroes/Edit/5

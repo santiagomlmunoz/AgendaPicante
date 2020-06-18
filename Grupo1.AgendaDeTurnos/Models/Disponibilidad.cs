@@ -13,7 +13,7 @@ namespace Grupo1.AgendaDeTurnos.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Debe ingresar una fecha")]
-        public DayOfWeek Dia { get; set; }
+        public DiasEnum Dia { get; set; }
 
         [Required(ErrorMessage = "Debe ingresar un horario de Inicio de cita")]
         [DataType(DataType.Time)]
@@ -25,10 +25,25 @@ namespace Grupo1.AgendaDeTurnos.Models
         [DisplayFormat(DataFormatString = "{0:hh\\:mm}")]
         public int HoraHasta { get; set; }
 
+        public string Descripcion { get; set; }
+
         [ForeignKey("Profesional")]
         [Display(Name = "Profesional")]
         public int IdProfesional { get; set; }
         public Profesional Porfesional { get; set; }
+
+        public Disponibilidad()
+        {
+
+        }
+        public Disponibilidad(int horaDesde, int horaHasta, DiasEnum dia)
+        {
+            HoraDesde = horaDesde;
+            HoraHasta = horaHasta;
+            Dia = dia;
+
+            Descripcion = dia.ToString() + " de " + horaDesde + " a " + horaHasta;
+        }
 
     }
 }

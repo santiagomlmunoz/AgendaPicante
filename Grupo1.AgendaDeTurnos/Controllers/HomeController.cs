@@ -74,13 +74,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 Monto =1000,
                 DuracionHoras = 2
             };
-            var disponibilidad = new Disponibilidad
-            {
-                Dia = DayOfWeek.Monday,
-                HoraDesde = 6,
-                HoraHasta = 17,
-
-            };
+            var disponibilidad = new Disponibilidad(9, 18, DiasEnum.Sabado);
 
             var direCentro = new Direccion
         {

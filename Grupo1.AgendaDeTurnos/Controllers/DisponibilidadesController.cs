@@ -19,6 +19,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             _context = context;
         }
 
+
         // GET: Disponibilidads
         public async Task<IActionResult> Index()
         {
