@@ -57,6 +57,36 @@ namespace Grupo1.AgendaDeTurnos.Controllers
 
         public async Task<IActionResult> NuevoTurno(Turno turno, int IdPrestacion, DateTime hora)
         {
+            //List<Profesional> profesionales = _context.Profesionales
+            //    .Include(x => x.Turnos)
+            //    .Include(x => x.Prestacion)
+            //    .Where(prof => 
+            //            prof.CentroId == idCentro && 
+            //            prof.PrestacionId == IdPrestacion &&
+            //            prof.Disponibilidades.Any(disponibilidad => 
+            //                disponibilidad.Dia == turno.Fecha.DayOfWeek && 
+            //                disponibilidad.HoraDesde <= hora.Hour && 
+            //                disponibilidad.HoraHasta >= (hora.Hour + prof.Prestacion.DuracionHoras)))
+            //    .ToList();
+
+            //Profesional profesionalAsignado = null;
+
+            //foreach (Profesional profesional in profesionales)
+            //{
+            //    if (!profesional.Turnos.Any(t => 
+            //            t.Fecha.DayOfWeek == turno.Fecha.DayOfWeek &&
+            //            // Fin de turno solicitado <= comienzo turno actual
+            //            (hora.Hour + profesional.Prestacion.DuracionHoras) <=  t.Fecha.Hour &&
+            //            // Fin de turno actual <= comienzo turno solicitado
+            //            (t.Fecha.Hour + profesional.Prestacion.DuracionHoras) <= hora.Hour))
+            //    {
+            //        profesionalAsignado = profesional;
+            //        break;
+            //    }
+            //}
+
+            // --------------- T ||||  T -------------------------
+
 
             ViewData["IdCentro"] = new SelectList(_context.Centros, "Id", "Nombre");
             ViewData["IdPrestacion"] = new SelectList(_context.Prestaciones, "Id", "Nombre");
