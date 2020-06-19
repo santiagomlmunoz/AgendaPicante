@@ -23,7 +23,10 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         // GET: Profesionals
         public async Task<IActionResult> Index()
         {
-            var agendaDeTurnosDbContext = _context.Profesionales.Include(p => p.Centro).Include(p => p.Prestacion);
+            var agendaDeTurnosDbContext = _context.Profesionales
+                .Include(p => p.Centro)
+                .Include(p => p.Prestacion)
+                .Include(p => p.Turnos);
             var lista= _context.Profesionales.ToList();
             return View(await agendaDeTurnosDbContext.ToListAsync());
         }
@@ -76,6 +79,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PrestacionId,CentroId,Id,Nombre,Apellido,Dni,Rol,Username")] Profesional profesional, string password, List<int> listDias)
         {
+
             
             if (ModelState.IsValid)
             {

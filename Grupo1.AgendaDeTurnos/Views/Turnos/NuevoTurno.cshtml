@@ -41,13 +41,13 @@
         <div class="alert-danger">
             @ViewBag.Error
         </div>
-        @if (@ViewBag.Estado != null)
+        @if (@ViewBag.MENSAJE != null)
         {
             <div class="alert-success">
-                @ViewBag.Estado
+                @ViewBag.MENSAJE
             </div>
-            <label>@ViewBag.Profesional</label>
-            <label>@ViewBag.Fecha</label>
+            <label>@ViewBag.PROFESIONAL</label>
+            <label>@ViewBag.HORARIO</label>
             <label>@ViewBag.Hora</label>
         }
     </div>
