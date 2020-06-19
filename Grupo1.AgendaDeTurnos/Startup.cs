@@ -48,10 +48,9 @@ namespace Grupo1.AgendaDeTurnos
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddDbContext<AgendaDeTurnosDbContext>(options => options.UseSqlServer("Server = SQL-07; Database = AGENDA_TURNOS; User Id = sa; Password = sqlPass;"));
 
-            //services.AddDbContext<AgendaDeTurnosDbContext>(options => options.UseSqlServer("Server = SQL-07; Database = turnofacu; User Id = root; Password = 1234;"));
-
-             services.AddDbContext<AgendaDeTurnosDbContext>(options => options.UseInMemoryDatabase("unaBaseDeDatos"));
+            //services.AddDbContext<AgendaDeTurnosDbContext>(options => options.UseInMemoryDatabase("unaBaseDeDatos"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
