@@ -23,21 +23,21 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         public IActionResult Index()
         {
           
-            if (!_context.Prestaciones.Any())
-            {
-               //Seed();
-                Administrador admin = new Administrador()
-                {
-                    Nombre = "ElAdmin",
-                    Apellido = "TheBest",
-                    Username = "SOYADMIN2",
-                    Password = "soyadmin".Encriptar(),
-                    Rol = RolesEnum.ADMINISTRADOR,
+            //if (!_context.Prestaciones.Any())
+            //{
+            //   //Seed();
+            //    Administrador admin = new Administrador()
+            //    {
+            //        Nombre = "ElAdmin",
+            //        Apellido = "TheBest",
+            //        Username = "SOYADMIN2",
+            //        Password = "soyadmin".Encriptar(),
+            //        Rol = RolesEnum.ADMINISTRADOR,
 
-                };
-                _context.Administradores.Add(admin);
-                _context.SaveChanges();
-            }
+            //    };
+            //    _context.Administradores.Add(admin);
+            //    _context.SaveChanges();
+            //}
              
 
 
