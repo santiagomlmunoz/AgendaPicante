@@ -19,7 +19,10 @@ caption {
 }
 
 th {
-    text-align: right;
+    text-align: center;
+}
+tr {
+    text-align: center;
 }
 
 .list-unstyled {

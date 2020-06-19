@@ -55,10 +55,18 @@ namespace Grupo1.AgendaDeTurnos.Controllers
 
 
 
-        public async Task<IActionResult> NuevoTurno(Turno turno, int IdPrestacion, DateTime hora)
+        public IActionResult NuevoTurno(Turno turno, int IdPrestacion, DateTime hora)
         {
+
             ViewData["IdCentro"] = new SelectList(_context.Centros, "Id", "Nombre");
             ViewData["IdPrestacion"] = new SelectList(_context.Prestaciones, "Id", "Nombre");
+            DateTime fechaYHoraDesde = turno.Fecha.AddHours(hora.Hour);
+            //VALIDACION PARA QUE EL TURNO SEA EN EL FUTURO
+            if (DateTime.Now > fechaYHoraDesde)
+            {
+                ViewBag.ERROR = "El turno debe ser en el futuro ";
+                return View();
+            }
             int pacienteId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             int idCentro = turno.IdCentro;
             List<Profesional> profesionales = _context.Profesionales
@@ -74,15 +82,17 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                                 .ToList();
 
             Profesional profesionalAsignado = null;
-
             foreach (Profesional profesional in profesionales)
             {
                 if (!profesional.Turnos.Any(t =>
-                        t.Fecha.DayOfWeek == turno.Fecha.DayOfWeek &&
+                        t.Fecha.Day == turno.Fecha.Day
+                        &&
                         // fin de turno solicitado <= comienzo turno actual
-                        (hora.Hour + profesional.Prestacion.DuracionHoras) <= t.Fecha.Hour &&
+                        //(hora.Hour + profesional.Prestacion.DuracionHoras) >= t.Fecha.Hour
+                         hora.Hour > t.Fecha.Hour - profesional.Prestacion.DuracionHoras
+                        &&
                         // fin de turno actual <= comienzo turno solicitado
-                        (t.Fecha.Hour + profesional.Prestacion.DuracionHoras) <= hora.Hour))
+                        (hora.Hour < (t.Fecha.Hour + profesional.Prestacion.DuracionHoras))))
                 {
 
                     profesionalAsignado = profesional;
@@ -259,5 +269,26 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         {
             return _context.Turnos.Any(e => e.Id == id);
         }
+        public async Task<IActionResult> MiAgenda()
+        {
+            int montoTotal = 0;
+            int profesionalId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            Profesional profesional = await _context.Profesionales
+                 .Include(p=> p.Turnos)
+                    .ThenInclude(t=>t.Paciente)
+                 .Include(p=> p.Prestacion)
+                 .Include(p=> p.Centro)
+                .SingleOrDefaultAsync(p => p.Id == profesionalId);
+
+                
+            if (profesional !=null && profesional.Turnos.Count > 0)
+            {
+                montoTotal = profesional.Turnos.Count * profesional.Prestacion.Monto;
+            }
+            ViewBag.Monto = montoTotal;
+            return View(profesional.Turnos);
+        }
+
     }
+
 }

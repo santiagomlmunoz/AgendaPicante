@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Grupo1.AgendaDeTurnos.Models.Turno>
+
+@{
+    ViewData["Title"] = "Mi Agenda";
+}
+
+<h1>MiAgenda</h1>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table text-center">
+    <thead class="text-center">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Paciente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Centro)
+            </th>
+            <th>
+               
+            </th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha)
+                    -
+                    @Html.DisplayFor(modelItem => item.Fecha.Hour) hs
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Paciente.Nombre)
+                    ,
+                    @Html.DisplayFor(modelItem => item.Paciente.Apellido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Centro.Nombre)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+
+
+        }
+        
+    </tbody>
+</table>
+        <div class="alert-success">
+            <span>El monto total recaudado $@ViewBag.Monto</span>
+        </div>
