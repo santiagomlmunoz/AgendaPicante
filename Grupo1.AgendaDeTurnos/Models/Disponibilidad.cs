@@ -30,7 +30,7 @@ namespace Grupo1.AgendaDeTurnos.Models
         [ForeignKey("Profesional")]
         [Display(Name = "Profesional")]
         public int IdProfesional { get; set; }
-        public Profesional Porfesional { get; set; }
+        public Profesional Profesional { get; set; }
 
         public Disponibilidad()
         {
