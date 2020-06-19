@@ -8,26 +8,92 @@
 
 <hr />
 
-<div class="row">
+
+@*<form asp-action="Create">
+
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Nombre" class="control-label"></label>
+        <input asp-for="Nombre" class="form-control" requiered />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+
+
+
+
+    <div class="form-row">
+        <div class="form-group col-md-9">
+            <label asp-for="Direccion.Calle" class="control-label"></label>
+            <input name="calle" class="form-control" requiered />
+            <span asp-validation-for="Direccion.Calle" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="Direccion.Altura" class="control-label"></label>
+            <input name="altura" type="number" class="form-control" requiered />
+            <span asp-validation-for="Direccion.Altura" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="Direccion.Localidad" class="control-label"></label>
+            <input name="localidad" class="form-control" requiered />
+            <span asp-validation-for="Direccion.Localidad" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Direccion.Provincia" class="control-label"></label>
+            <input name="provincia" class="form-control" requiered />
+            <span asp-validation-for="Direccion.Provincia" class="text-danger"></span>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <input type="submit" value="Crear Centro" class="btn btn-primary" />
+    </div>
+</form>
+
+
+<div>
+    <a asp-action="Index">Volver</a>
+</div>*@
+
+
+
+
+
+
+<div class="row bounceIn bounceInLeft">
     <div class="col-lg-offset-4 col-md-4">
+
+
         <form method="post" asp-action="Ingresar">
+
             <input type="hidden" value="@ViewBag.ReturnUrl" name="returnUrl" />
             <div class="text-danger">
                 @ViewBag.Error
             </div>
+
+
             <div class="form-group">
                 <label laber-for="username" class="control-label">Nombre de usuario:</label>
                 <input name="username" class="form-control" type="text" value="@ViewBag.Username" />
             </div>
+
             <div class="form-group">
                 <label label-for="Password" class="control-label">Contraseña:</label>
                 <input name="password" class="form-control" type="password" />
             </div>
+
             <div class="form-group">
-                <input type="submit" value="Login" class="btn btn-success" />
+                <input type="submit" value="Login" class="btn btn-success btn3d" />
             </div>
         </form>
-        <a class="btn btn-primary" asp-controller="Cuenta" asp-action="Registrar">Registrarse</a>
+        <a asp-area="" asp-controller="Cuentas" asp-action="Registrar">
+            <button type="button" class="btn btn-info btn3d">Registrarse</button>
+        </a>
+        @*<a class="btn btn-primary" asp-controller="Cuenta" asp-action="Registrar">Registrarse</a>*@
     </div>
     <div>
         <p>Para ingresar como paciente: user: duki pass:goku</p>

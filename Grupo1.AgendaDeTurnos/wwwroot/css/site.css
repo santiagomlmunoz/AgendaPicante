@@ -1,5 +1,7 @@
-﻿body {
-    
+﻿body {}
+
+table {
+    text-align: center!important;
 }
 
 #menuT {
@@ -19,9 +21,6 @@ caption {
 }
 
 th {
-    text-align: center;
-}
-tr {
     text-align: center;
 }
 
@@ -51,163 +50,9 @@ tr {
     border-right: 0;
 }
 
-dl.row > dd + dt {
+dl.row>dd+dt {
     clear: right;
 }
-
-
-/*.pull-0 {
-    left: auto;
-}
-
-.pull-1 {
-    left: 8.33333%;
-}
-
-.pull-2 {
-    left: 16.66667%;
-}
-
-.pull-3 {
-    left: 25%;
-}
-
-.pull-4 {
-    left: 33.33333%;
-}
-
-.pull-5 {
-    left: 41.66667%;
-}
-
-.pull-6 {
-    left: 50%;
-}
-
-.pull-7 {
-    left: 58.33333%;
-}
-
-.pull-8 {
-    left: 66.66667%;
-}
-
-.pull-9 {
-    left: 75%;
-}
-
-.pull-10 {
-    left: 83.33333%;
-}
-
-.pull-11 {
-    left: 91.66667%;
-}
-
-.pull-12 {
-    left: 100%;
-}
-
-.push-0 {
-    right: auto;
-}
-
-.push-1 {
-    right: 8.33333%;
-}
-
-.push-2 {
-    right: 16.66667%;
-}
-
-.push-3 {
-    right: 25%;
-}
-
-.push-4 {
-    right: 33.33333%;
-}
-
-.push-5 {
-    right: 41.66667%;
-}
-
-.push-6 {
-    right: 50%;
-}
-
-.push-7 {
-    right: 58.33333%;
-}
-
-.push-8 {
-    right: 66.66667%;
-}
-
-.push-9 {
-    right: 75%;
-}
-
-.push-10 {
-    right: 83.33333%;
-}
-
-.push-11 {
-    right: 91.66667%;
-}
-
-.push-12 {
-    right: 100%;
-}
-
-.offset-1 {
-    margin-right: 8.33333%;
-}
-
-.offset-2 {
-    margin-right: 16.66667%;
-}
-
-.offset-3 {
-    margin-right: 25%;
-}
-
-.offset-4 {
-    margin-right: 33.33333%;
-}
-
-.offset-5 {
-    margin-right: 41.66667%;
-}
-
-.offset-6 {
-    margin-right: 50%;
-}
-
-.offset-7 {
-    margin-right: 58.33333%;
-}
-
-.offset-8 {
-    margin-right: 66.66667%;
-}
-
-.offset-9 {
-    margin-right: 75%;
-}
-
-.offset-10 {
-    margin-right: 83.33333%;
-}
-
-.offset-11 {
-    margin-right: 91.66667%;
-}
-
-
-body {
-    overflow-x: hidden;
-}*/
 
 #wrapper {
     padding-left: 0;
@@ -217,9 +62,9 @@ body {
     transition: all 0.5s ease;
 }
 
-    #wrapper.toggled {
-        padding-right: 250px;
-    }
+#wrapper.toggled {
+    padding-right: 250px;
+}
 
 #sidebar-wrapper {
     z-index: 1000;
@@ -263,38 +108,98 @@ body {
     list-style: none;
 }
 
-    .sidebar-nav li {
-        text-indent: 20px;
-        line-height: 40px;
-    }
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
 
-        .sidebar-nav li a {
-            display: block;
-            text-decoration: none;
-            color: #999999;
-        }
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #999999;
+}
 
-            .sidebar-nav li a:hover {
-                text-decoration: none;
-                color: #fff;
-                background: rgba(255, 255, 255, 0.2);
-            }
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+}
 
-            .sidebar-nav li a:active, .sidebar-nav li a:focus {
-                text-decoration: none;
-            }
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
 
-    .sidebar-nav > .sidebar-brand {
-        height: 65px;
-        font-size: 18px;
-        line-height: 60px;
-    }
+.sidebar-nav>.sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+}
 
-        .sidebar-nav > .sidebar-brand a {
-            color: #999999;
-        }
+.sidebar-nav>.sidebar-brand a {
+    color: #999999;
+}
 
-            .sidebar-nav > .sidebar-brand a:hover {
-                color: #fff;
-                background: none;
-            }
+.sidebar-nav>.sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+
+
+/*BOTONES 3D*/
+
+.btn3d {
+    position: relative;
+    top: -6px;
+    border: 0;
+    transition: all 40ms linear;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.btn3d:active:focus,
+.btn3d:focus:hover,
+.btn3d:focus {
+    -moz-outline-style: none;
+    outline: medium none;
+}
+
+.btn3d:active,
+.btn3d.active {
+    top: 2px;
+}
+
+.btn3d.btn-info {
+    box-shadow: 0 0 0 1px #00a5c3 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #348FD2, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+    background-color: #39B3D7;
+}
+
+.btn3d.btn-info:active,
+.btn3d.btn-info.active {
+    box-shadow: 0 0 0 1px #00a5c3 inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+    background-color: #39B3D7;
+}
+
+.btn3d.btn-success {
+    box-shadow: 0 0 0 1px #31c300 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #5eb924, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+    background-color: #78d739;
+}
+
+.btn3d.btn-success:active,
+.btn3d.btn-success.active {
+    box-shadow: 0 0 0 1px #30cd00 inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+    background-color: #78d739;
+}
+
+.btn3d.btn-danger {
+    box-shadow: 0 0 0 1px #b93802 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #AA0000, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+    background-color: #D73814;
+}
+
+.btn3d.btn-danger:active,
+.btn3d.btn-danger.active {
+    box-shadow: 0 0 0 1px #b93802 inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+    background-color: #D73814;
+}
