@@ -25,7 +25,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
           
             if (!_context.Prestaciones.Any())
             {
-               Seed();
+               //Seed();
                 Administrador admin = new Administrador()
                 {
                     Nombre = "ElAdmin",
