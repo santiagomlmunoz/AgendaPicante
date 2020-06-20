@@ -4,12 +4,14 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Grupo1.AgendaDeTurnos.Database;
+using Grupo1.AgendaDeTurnos.EnumList;
 using Grupo1.AgendaDeTurnos.Extensions;
 using Grupo1.AgendaDeTurnos.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
@@ -34,6 +36,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         }
             public IActionResult Registrar()
         {
+            
             return View();
         }
         [AllowAnonymous]

@@ -17,7 +17,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group col-md-4">
                 <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" autofocus/>
+                <input asp-for="Nombre" class="form-control" autofocus />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
             <div class="form-group col-md-4">
@@ -39,13 +39,13 @@
             </div>
             <div class="form-group col-md-6">
                 <label label-for="Password" class="control-label">Contraseña:</label>
-                <input name="password" class="form-control" type="password" required  />
+                <input name="password" class="form-control" type="password" required />
             </div>
         </div>
 
         <div class="form-group text-right">
-            <a asp-area="" asp-controller="Cuentas" asp-action="Registrar">
-                <button type="submit" class="btn btn-success btn3d">Registrar Usuario</button>
+            <a type="submit" class="btn btn-success btn3d" asp-area="" asp-controller="Cuentas" asp-action="Registrar">
+                Registrar Usuario
             </a>
         </div>
 

@@ -48,14 +48,14 @@
                     <ul class="nav navbar-nav pull-xs-right">
 
                         <li class="nav-item">
-                            <a asp-area="" asp-controller="Cuentas" asp-action="Ingresar">
-                                <button type="button" class="btn btn-success btn3d">Iniciar Sesión</button>
+                            <a type="button" class="btn btn-success btn3d" asp-area="" asp-controller="Cuentas" asp-action="Ingresar">
+                                Iniciar Sesión
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a asp-area="" asp-controller="Cuentas" asp-action="Registrar">
-                            <button type="button" class="btn btn-info btn3d">Registrarse</button>
+                            <a type="button" class="btn btn-info btn3d" asp-area="" asp-controller="Cuentas" asp-action="Registrar">
+                                Registrarse
                             </a>
                         </li>
                     </ul>
@@ -87,6 +87,9 @@
                     <li class="">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Turnos" asp-action="MiAgenda">Mi agenda</a>
                     </li>
+                    <li class="">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Turnos" asp-action="AgendaDiaria">Turnos de hoy</a>
+                    </li>
                 }
                 @if (User.IsInRole(nameof(RolesEnum.ADMINISTRADOR)))
                 {
@@ -112,7 +115,7 @@
                     <li class="">
                         <a class="nav-link text-light" asp-area="" asp-controller="Turnos" asp-action="Index">Turnos</a>
                     </li>
-                    
+
                 }
 
             </ul>

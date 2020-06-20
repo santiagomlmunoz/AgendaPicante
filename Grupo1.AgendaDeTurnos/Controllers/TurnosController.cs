@@ -11,12 +11,18 @@ using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http2.HPack;
 using System.Security.Claims;
 using System.Linq.Expressions;
 using Grupo1.AgendaDeTurnos.Extensions;
+using Grupo1.AgendaDeTurnos.EnumList;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
     public class TurnosController : Controller
     {
+        private int RANGO_TOLERANCIA_TURNO_MINUTOS = 15;
+
+
         private readonly AgendaDeTurnosDbContext _context;
+
+
 
         public TurnosController(AgendaDeTurnosDbContext context)
         {
@@ -37,6 +43,16 @@ namespace Grupo1.AgendaDeTurnos.Controllers
 
             return View();
         }
+        [HttpGet]
+        public IActionResult ComenzarConsulta(int Id)
+        {
+            Turno turno = _context.Turnos
+                 .Include(t => t.Paciente)
+                 .Where(t => t.Id == Id)
+                 .SingleOrDefault();
+
+            return View(turno);
+        }
 
         [HttpGet]
         public async Task<IActionResult> MisTurnos()
@@ -53,14 +69,62 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(paciente.Turnos);
         }
 
+        public  IActionResult FinalizarConsulta(int Id)
+        {
+            Turno turno = _context.Turnos
+                .Where(t => t.Id == Id)
+                .SingleOrDefault();
+            turno.Estado = EstadoTurnoEnum.FINALIZADO;
+            _context.Turnos.Update(turno);
+            _context.SaveChanges();
+            return RedirectToAction("AgendaDiaria");
+
+        }
+      
+        [HttpGet]
+        public async Task<IActionResult> AgendaDiaria()
+        {
+            DateTime fechaDeHoy = DateTime.Now;
+            int profesionalId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            Profesional profesional = await _context.Profesionales
+                .Include(p=>p.Centro)
+                .Include(p => p.Prestacion)
+                .Include(p => p.Turnos)
+                    .ThenInclude(t=> t.Paciente)
+                .Where(p => p.Id == profesionalId).SingleOrDefaultAsync();
+
+            var listTurnosHoy = new List<Turno>();
+            foreach (Turno t in profesional.Turnos)
+            {
+                DateTime rangoHasta = fechaDeHoy.AddMinutes(RANGO_TOLERANCIA_TURNO_MINUTOS);
+                DateTime rangoDesde = fechaDeHoy.AddMinutes(RANGO_TOLERANCIA_TURNO_MINUTOS * -1);
+
+                if (t.Fecha.Day == fechaDeHoy.Day)
+                {
+                    if(t.Fecha >= rangoDesde && t.Fecha <= rangoHasta && t.Estado != EstadoTurnoEnum.FINALIZADO)
+                    {
+                        //CAMBIO EL ESTADO PARA QUE DESDE EL FRONT SE PUEDA REALIZAR LA CONSULTA
+                        t.Estado = EstadoTurnoEnum.ACTUAL;
+                    }
+                    listTurnosHoy.Add(t);
+                }
+            }
+            if(listTurnosHoy.Count == 0)
+            {
+                ViewBag.MENSAJE = "No posee turnos reservados para el dia de hoy"; 
+            }
+            return View(listTurnosHoy);
+        }
 
 
-        public IActionResult NuevoTurno(Turno turno, int IdPrestacion, DateTime hora)
+
+        public IActionResult NuevoTurno(Turno turno, int IdPrestacion, int hora)
         {
 
             ViewData["IdCentro"] = new SelectList(_context.Centros, "Id", "Nombre");
             ViewData["IdPrestacion"] = new SelectList(_context.Prestaciones, "Id", "Nombre");
-            DateTime fechaYHoraDesde = turno.Fecha.AddHours(hora.Hour);
+            DateTime fechaYHoraDesde = turno.Fecha.AddHours(hora);
             //VALIDACION PARA QUE EL TURNO SEA EN EL FUTURO
             if (DateTime.Now > fechaYHoraDesde)
             {
@@ -76,9 +140,9 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                                         prof.CentroId == idCentro &&
                                         prof.PrestacionId == IdPrestacion &&
                                         prof.Disponibilidades.Any(disponibilidad =>
-                                            disponibilidad.Dia == GetDia.ObtenerDiaPorDayOfWeek(turno.Fecha.DayOfWeek) &&
-                                            disponibilidad.HoraDesde <= hora.Hour &&
-                                            disponibilidad.HoraHasta >= (hora.Hour + prof.Prestacion.DuracionHoras)))
+                                            disponibilidad.Dia == DateUtil.ObtenerDiaPorDayOfWeek(turno.Fecha.DayOfWeek) &&
+                                            disponibilidad.HoraDesde <= hora &&
+                                            disponibilidad.HoraHasta >= (hora + prof.Prestacion.DuracionHoras)))
                                 .ToList();
 
             Profesional profesionalAsignado = null;
@@ -89,28 +153,25 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                         &&
                         // fin de turno solicitado <= comienzo turno actual
                         //(hora.Hour + profesional.Prestacion.DuracionHoras) >= t.Fecha.Hour
-                         hora.Hour > t.Fecha.Hour - profesional.Prestacion.DuracionHoras
+                         hora > t.Fecha.Hour - profesional.Prestacion.DuracionHoras
                         &&
                         // fin de turno actual <= comienzo turno solicitado
-                        (hora.Hour < (t.Fecha.Hour + profesional.Prestacion.DuracionHoras))))
+                        (hora < (t.Fecha.Hour + profesional.Prestacion.DuracionHoras))))
                 {
 
                     profesionalAsignado = profesional;
-                    Turno turnoReservado = new Turno()
-                    {
-                        IdCentro = idCentro,
-                        Profesional = profesionalAsignado,
-                        Fecha = turno.Fecha.AddHours(hora.Hour),
-                        IdPaciente = pacienteId,
-                                               
-                    };
+                    turno.IdCentro = idCentro;
+                    turno.Profesional = profesionalAsignado;
+                    turno.Fecha = turno.Fecha.AddHours(hora);
+                    turno.IdPaciente = pacienteId;
+                    turno.Estado = EstadoTurnoEnum.PENDIENTE;
                     if(profesionalAsignado.Turnos == null)
                     {
                         profesionalAsignado.Turnos = new List<Turno>();
                        
                     }
                     //NO HACE FALTA GUARDAR EL TURNO, SE GUARDA AL RELACIONARLO CON PROFESIONAL
-                    profesionalAsignado.Turnos.Add(turnoReservado);
+                    profesionalAsignado.Turnos.Add(turno);
                     _context.Profesionales.Update(profesionalAsignado);
                     _context.SaveChanges();
                     //MENSAJE RETORNO
@@ -119,7 +180,8 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                         profesionalAsignado.Nombre
                         + " "
                         + profesionalAsignado.Apellido;
-                    ViewBag.HORARIO = GetDia.ObtenerDiaPorDayOfWeek(turno.Fecha.DayOfWeek) + " a las " + hora.Hour + "hs";
+                    ViewBag.DIA = DateUtil.FechaToString(turno.Fecha);
+                    ViewBag.HORA = turno.Fecha.Hour + "hs";
                     //------------
                     return View();
                 }
@@ -262,7 +324,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             var turno = await _context.Turnos.FindAsync(id);
             _context.Turnos.Remove(turno);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(MisTurnos));
         }
 
         private bool TurnoExists(int id)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Grupo1.AgendaDeTurnos.EnumList;
 
 namespace Grupo1.AgendaDeTurnos.Models
 {
@@ -23,6 +24,8 @@ namespace Grupo1.AgendaDeTurnos.Models
         public int IdPaciente { set; get; }
         public Paciente Paciente { set; get; }
 
+        public string Descripcion { get; set; }
+
         [ForeignKey("Profesional")]
         [Display(Name = "Profesional")]
         public int IdProfesional { set; get; }
@@ -32,6 +35,8 @@ namespace Grupo1.AgendaDeTurnos.Models
         [Display(Name = "Centro")]
         public int IdCentro { set; get; }
         public Centro Centro { set; get; }
+
+        public EstadoTurnoEnum Estado { set; get; }
 
     }
 

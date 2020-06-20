@@ -22,23 +22,23 @@ namespace Grupo1.AgendaDeTurnos.Controllers
 
         public IActionResult Index()
         {
-          
-            //if (!_context.Prestaciones.Any())
-            //{
-            //   //Seed();
-            //    Administrador admin = new Administrador()
-            //    {
-            //        Nombre = "ElAdmin",
-            //        Apellido = "TheBest",
-            //        Username = "SOYADMIN2",
-            //        Password = "soyadmin".Encriptar(),
-            //        Rol = RolesEnum.ADMINISTRADOR,
 
-            //    };
-            //    _context.Administradores.Add(admin);
-            //    _context.SaveChanges();
-            //}
-             
+            if (!_context.Administradores.Any())
+            {
+                Seed();
+                //Administrador admin = new Administrador()
+                //{
+                //    Nombre = "ElAdmin",
+                //    Apellido = "TheBest",
+                //    Username = "SOYADMIN2",
+                //    Password = "soyadmin".Encriptar(),
+                //    Rol = RolesEnum.ADMINISTRADOR,
+
+                //};
+               // _context.Administradores.Add(admin);
+               //_context.SaveChanges();
+            }
+
 
 
             return View();
@@ -74,7 +74,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 Monto =1000,
                 DuracionHoras = 2
             };
-            var disponibilidad = new Disponibilidad(9, 18, DiasEnum.Sabado);
+            var disponibilidad = new Disponibilidad(9, 23, DiasEnum.Sabado);
 
             var direCentro = new Direccion
         {

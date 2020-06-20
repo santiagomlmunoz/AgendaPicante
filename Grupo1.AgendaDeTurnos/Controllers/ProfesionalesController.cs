@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Grupo1.AgendaDeTurnos.Database;
 using Grupo1.AgendaDeTurnos.Models;
 using Grupo1.AgendaDeTurnos.Extensions;
+using Grupo1.AgendaDeTurnos.EnumList;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {

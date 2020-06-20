@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Grupo1.AgendaDeTurnos.Models.Turno>
+
+@{
+    ViewData["Title"] = "Agenda Diaria";
+}
+
+<h1>AgendaDiaria</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Horario
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Paciente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Centro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Profesional.Prestacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha.Hour) hs
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Paciente.Apellido)
+                @Html.DisplayFor(modelItem => item.Paciente.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Centro.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Profesional.Prestacion.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @if (item.Estado == Grupo1.AgendaDeTurnos.EnumList.EstadoTurnoEnum.ACTUAL)
+                {
+                    <a class="btn btn-success" asp-action="ComenzarConsulta" asp-route-id="@item.Id">Comenzar consulta</a>
+                }
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
