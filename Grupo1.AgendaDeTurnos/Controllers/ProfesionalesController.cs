@@ -9,19 +9,20 @@ using Grupo1.AgendaDeTurnos.Database;
 using Grupo1.AgendaDeTurnos.Models;
 using Grupo1.AgendaDeTurnos.Extensions;
 using Grupo1.AgendaDeTurnos.EnumList;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
-    public class ProfesionalesController : Controller
+    public class Profesionales : Controller
     {
         private readonly AgendaDeTurnosDbContext _context;
 
-        public ProfesionalesController(AgendaDeTurnosDbContext context)
+        public Profesionales(AgendaDeTurnosDbContext context)
         {
             _context = context;
         }
 
-        // GET: Profesionals
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public async Task<IActionResult> Index()
         {
             var agendaDeTurnosDbContext = _context.Profesionales
@@ -32,7 +33,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(await agendaDeTurnosDbContext.ToListAsync());
         }
 
-        // GET: Profesionals/Details/5
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -52,34 +53,48 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(profesional);
         }
 
-        // GET: Profesionals/Create
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public IActionResult Create()
 
         {
-            ViewData["Disponibilidades"] = new MultiSelectList(_context.Disponibilidades, "Id", "Descripcion");
+
+            List<Disponibilidad> disponibilidades = _context.Disponibilidades.Where(d => d.IdProfesional == 0).ToList();
+            ViewData["Disponibilidades"] = new MultiSelectList(disponibilidades, "Id", "Descripcion");
             ViewData["DiasSemana"] = new SelectList(Enum.GetValues(typeof(DiasEnum)).Cast<DiasEnum>());
             ViewData["CentroId"] = new SelectList(_context.Centros, "Id", "Nombre");
             ViewData["PrestacionId"] = new SelectList(_context.Prestaciones, "Id", "Nombre");
+
+
             return View();
         }
-        public IActionResult AgregarDisponibilidad(int desde, int hasta, DiasEnum dia)
+
+
+        public bool verificarExistenciaDeUsuario(string usuario)
         {
-            Disponibilidad dis = new Disponibilidad(desde, hasta, dia);
-           _context.Disponibilidades.Add(dis);
-           _context.SaveChanges();
-
-            ViewData["Disponibilidades"] = new MultiSelectList(_context.Disponibilidades, "Id", "Descripcion");
-            return RedirectToAction(nameof(Create));
+            if(_context.Profesionales.Any(p => p.Username.Equals(usuario)) 
+                || _context.Pacientes.Any(p => p.Username.Equals(usuario))
+                || _context.Administradores.Any(a => a.Username.Equals(usuario)))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-        
 
-        // POST: Profesionals/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PrestacionId,CentroId,Id,Nombre,Apellido,Dni,Rol,Username")] Profesional profesional, string password, List<int> listDias)
         {
+            string username = profesional.Username;
+            if(verificarExistenciaDeUsuario(username))
+            {
+                ViewBag.Error = "El usuario ya existe";
+                return View();
+            }
 
             
             if (ModelState.IsValid)
@@ -95,6 +110,9 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 }
                 _context.Profesionales.Add(profesional);
                 await _context.SaveChangesAsync();
+                //-------------------------
+                borrarDisponibilidadesNoRelacionadas();
+                //-------------------------
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DiasSemana"] = new SelectList(Enum.GetValues(typeof(DiasEnum)).Cast<DiasEnum>());
@@ -103,8 +121,20 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             ViewData["PrestacionId"] = new SelectList(_context.Prestaciones, "Id", "Nombre", profesional.PrestacionId);
             return View(profesional);
         }
+        public async void borrarDisponibilidadesNoRelacionadas()
+        {
+          List<Disponibilidad> disponibilidades =await _context.Disponibilidades
+                .Where(d=>d.IdProfesional == 0)
+            .ToListAsync();
 
-        // GET: Profesionals/Edit/5
+            foreach(Disponibilidad d in disponibilidades)
+            {
+                _context.Disponibilidades.Remove(d);
+            }
+            _context.SaveChanges();
+        }
+
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -122,9 +152,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(profesional);
         }
 
-        // POST: Profesionals/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("PrestacionId,CentroId,Id,Nombre,Apellido,Dni,Rol,Username")] Profesional profesional)
@@ -159,7 +187,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(profesional);
         }
 
-        // GET: Profesionals/Delete/5
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -179,7 +207,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(profesional);
         }
 
-        // POST: Profesionals/Delete/5
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

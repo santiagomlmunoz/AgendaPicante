@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Grupo1.AgendaDeTurnos.Database;
 using Grupo1.AgendaDeTurnos.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
@@ -14,19 +15,31 @@ namespace Grupo1.AgendaDeTurnos.Controllers
     {
         private readonly AgendaDeTurnosDbContext _context;
 
+        
         public DisponibilidadesController(AgendaDeTurnosDbContext context)
         {
             _context = context;
         }
 
 
-        // GET: Disponibilidads
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Disponibilidades.ToListAsync());
         }
 
-        // GET: Disponibilidads/Details/5
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
+        public IActionResult AgregarDisponibilidad(int desde, int hasta, DiasEnum dia)
+        {
+            Disponibilidad dis = new Disponibilidad(desde, hasta, dia);
+            _context.Disponibilidades.Add(dis);
+            _context.SaveChanges();
+
+            ViewData["Disponibilidades"] = new MultiSelectList(_context.Disponibilidades, "Id", "Descripcion");
+            return RedirectToAction("Create", "Profesionales");
+        }
+
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -41,28 +54,6 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            return View(disponibilidad);
-        }
-
-        // GET: Disponibilidads/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Disponibilidads/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Dia,HoraDesde,HoraHasta,IdProfesional")] Disponibilidad disponibilidad)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(disponibilidad);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
             return View(disponibilidad);
         }
 

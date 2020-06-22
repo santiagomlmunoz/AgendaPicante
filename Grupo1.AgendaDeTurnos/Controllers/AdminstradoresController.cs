@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Grupo1.AgendaDeTurnos.Database;
 using Grupo1.AgendaDeTurnos.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
@@ -19,13 +20,13 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             _context = context;
         }
 
-        // GET: Administradors
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Administradores.ToListAsync());
         }
 
-        // GET: Administradors/Details/5
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,15 +44,13 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(administrador);
         }
 
-        // GET: Administradors/Create
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Administradors/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,Dni,Rol,Username")] Administrador administrador)
@@ -65,7 +64,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(administrador);
         }
 
-        // GET: Administradors/Edit/5
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,9 +80,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(administrador);
         }
 
-        // POST: Administradors/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Apellido,Dni,Rol,Username")] Administrador administrador)
@@ -116,7 +113,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(administrador);
         }
 
-        // GET: Administradors/Delete/5
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,7 +131,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(administrador);
         }
 
-        // POST: Administradors/Delete/5
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -23,10 +23,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
+
         [AllowAnonymous]
         public IActionResult Ingresar(string returnUrl)
         {
@@ -34,13 +31,15 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-            public IActionResult Registrar()
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Registrar()
         {
             
             return View();
         }
         [AllowAnonymous]
-        [HttpPost]
         public async Task<IActionResult> Registrar(string password, Paciente paciente)
         {
             paciente.Rol = RolesEnum.CLIENTE;
@@ -60,13 +59,16 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View();
         }
 
-        private Boolean validarUsuarioExiste(string username)
+        private bool validarUsuarioExiste(string username)
         {
-             Usuario usuario = _context.Pacientes.FirstOrDefault(usr => usr.Username == username);
-            if (usuario != null)
+            if (_context.Profesionales.Any(p => p.Username.Equals(username))
+                || _context.Pacientes.Any(p => p.Username.Equals(username))
+                || _context.Administradores.Any(a => a.Username.Equals(username)))
             {
                 return true;
-            }else{
+            }
+            else
+            {
                 return false;
             }
         }

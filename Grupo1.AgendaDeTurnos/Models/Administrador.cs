@@ -10,34 +10,6 @@ namespace Grupo1.AgendaDeTurnos.Models
     public class Administrador : Usuario
     {
 
-        //public Administrador(string nombre, string apellido, string dni, Rol rol) : base(nombre, apellido, dni, rol) { }
-        //public Paciente CrearPaciente(string nombre, string apellido, string dni, Rol rol)
-        //{
-        //    Paciente p = new Paciente(nombre, apellido, dni, rol);
-        //    return p;
-        //}
-
-        public void BajaPaciente(Paciente p)
-        {
-        }
-
-        
-
-        public void BajaCentro()
-        {
-        }
-
-        //public Turno CrearTurno(DateTime fecha, int hora, bool estado, Paciente paciente, Profesional profesional, Consultorio consultorio)
-        //{
-        //    Turno t = new Turno(fecha, hora, estado, paciente, profesional, consultorio);
-        //    return t;
-        //}
-
-
-        public void BajaTurno()
-        {
-        }
-
     }
 
 

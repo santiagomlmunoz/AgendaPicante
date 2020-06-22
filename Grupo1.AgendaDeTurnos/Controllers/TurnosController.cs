@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.Linq.Expressions;
 using Grupo1.AgendaDeTurnos.Extensions;
 using Grupo1.AgendaDeTurnos.EnumList;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
@@ -29,12 +30,13 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             _context = context;
         }
 
-        // GET: Turnoes
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public async Task<IActionResult> Index()
         {
             var agendaDeTurnosDbContext = _context.Turnos.Include(t => t.Centro).Include(t => t.Paciente).Include(t => t.Profesional);
             return View(await agendaDeTurnosDbContext.ToListAsync());
         }
+        [Authorize]
         [HttpGet]
         public IActionResult NuevoTurno()
         {
@@ -43,6 +45,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
 
             return View();
         }
+        [Authorize(Roles = nameof(RolesEnum.PROFESIONAL))]
         [HttpGet]
         public IActionResult ComenzarConsulta(int Id)
         {
@@ -54,6 +57,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(turno);
         }
 
+        [Authorize(Roles = nameof(RolesEnum.CLIENTE))]
         [HttpGet]
         public async Task<IActionResult> MisTurnos()
         {
@@ -69,6 +73,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(paciente.Turnos);
         }
 
+        [Authorize(Roles = nameof(RolesEnum.PROFESIONAL))]
         public  IActionResult FinalizarConsulta(int Id)
         {
             Turno turno = _context.Turnos
@@ -80,7 +85,9 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return RedirectToAction("AgendaDiaria");
 
         }
-      
+
+
+        [Authorize(Roles = nameof(RolesEnum.PROFESIONAL))]
         [HttpGet]
         public async Task<IActionResult> AgendaDiaria()
         {
@@ -118,7 +125,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         }
 
 
-
+        [Authorize]
         public IActionResult NuevoTurno(Turno turno, int IdPrestacion, int hora)
         {
 
@@ -190,7 +197,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View();
 
         }
-        // GET: Turnoes/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -211,7 +218,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(turno);
         }
 
-        // GET: Turnoes/Create
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public IActionResult Create()
         {
             ViewData["IdCentro"] = new SelectList(_context.Centros, "Id", "Nombre");
@@ -219,9 +226,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             ViewData["IdProfesional"] = new SelectList(_context.Profesionales, "Id", "Apellido");
             return View();
         }
-        // POST: Turnoes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Fecha,IdPaciente,IdProfesional,IdCentro")] Turno turno)
@@ -238,7 +243,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(turno);
         }
 
-        // GET: Turnoes/Edit/5
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -257,9 +262,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(turno);
         }
 
-        // POST: Turnoes/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha,IdPaciente,IdProfesional,IdCentro")] Turno turno)
@@ -295,7 +298,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(turno);
         }
 
-        // GET: Turnoes/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -316,7 +319,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(turno);
         }
 
-        // POST: Turnoes/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -331,8 +334,11 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         {
             return _context.Turnos.Any(e => e.Id == id);
         }
+
+        [Authorize(Roles = nameof(RolesEnum.PROFESIONAL))]
         public async Task<IActionResult> MiAgenda()
         {
+            int mesActual = DateTime.Now.Month;
             int montoTotal = 0;
             int profesionalId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             Profesional profesional = await _context.Profesionales
@@ -342,13 +348,28 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                  .Include(p=> p.Centro)
                 .SingleOrDefaultAsync(p => p.Id == profesionalId);
 
-                
-            if (profesional !=null && profesional.Turnos.Count > 0)
+            List<Turno> turnosDelMesActual = new List<Turno>();
+            foreach(Turno t in profesional.Turnos)
             {
-                montoTotal = profesional.Turnos.Count * profesional.Prestacion.Monto;
+                if(t.Fecha.Month == mesActual)
+                {
+                    turnosDelMesActual.Add(t);
+                }
             }
+            if (profesional !=null && turnosDelMesActual.Count > 0)
+            {
+                foreach(Turno t in turnosDelMesActual)
+                {
+                    if(t.Estado == EstadoTurnoEnum.FINALIZADO)
+                    {
+                        montoTotal = turnosDelMesActual.Count * profesional.Prestacion.Monto;
+                    }
+                }
+               
+            }
+            ViewBag.Bienvenida = "Turnos para el mes de " + DateUtil.getMesPorNumero(mesActual);
             ViewBag.Monto = montoTotal;
-            return View(profesional.Turnos);
+            return View(turnosDelMesActual);
         }
 
     }

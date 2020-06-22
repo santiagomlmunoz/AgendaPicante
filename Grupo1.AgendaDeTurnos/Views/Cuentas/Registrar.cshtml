@@ -8,12 +8,12 @@
 <hr />
 
 <div class="bounceIn bounceInRight">
-    <form asp-action="Create">
+    <div class="text-danger">
+        @ViewBag.Error
+    </div>
+    <form asp-controller="Cuentas" asp-action="Registrar">
 
         <div class="form-row">
-            <div class="text-danger">
-                @ViewBag.Error
-            </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group col-md-4">
                 <label asp-for="Nombre" class="control-label"></label>
@@ -44,9 +44,8 @@
         </div>
 
         <div class="form-group text-right">
-            <a type="submit" class="btn btn-success btn3d" asp-area="" asp-controller="Cuentas" asp-action="Registrar">
-                Registrar Usuario
-            </a>
+            <input type="submit" value="Registrar Usuario" class="btn btn-success btn3d" />
+
         </div>
 
     </form>

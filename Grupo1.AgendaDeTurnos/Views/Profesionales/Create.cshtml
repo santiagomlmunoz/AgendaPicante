@@ -55,7 +55,7 @@
     </div>
     <div class="col col-md-5">
         <h2>Dias y horario disponible</h2>
-        <form asp-action="AgregarDisponibilidad">
+        <form asp-controller="Disponibilidades" asp-action="AgregarDisponibilidad">
                 <label class="control-label">Dia</label>
                 <select name="dia" class="form-control" asp-items="ViewBag.DiasSemana"></select>
             

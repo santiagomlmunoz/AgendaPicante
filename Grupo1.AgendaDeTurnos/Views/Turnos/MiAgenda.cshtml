@@ -4,10 +4,10 @@
     ViewData["Title"] = "Mi Agenda";
 }
 
-<h1>MiAgenda</h1>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1>@ViewBag.Bienvenida</h1>
+<div class="alert-success" id="montoRecaudado">
+    <span>El monto total recaudado $@ViewBag.Monto</span>
+</div>
 <table class="table text-center">
     <thead class="text-center">
         <tr>
@@ -21,7 +21,10 @@
                 @Html.DisplayNameFor(model => model.Centro)
             </th>
             <th>
-               
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+
             </th>
         </tr>
     </thead>
@@ -43,17 +46,17 @@
                     @Html.DisplayFor(modelItem => item.Centro.Nombre)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+
                 </td>
             </tr>
 
 
         }
-        
+
     </tbody>
 </table>
-        <div class="alert-success">
-            <span>El monto total recaudado $@ViewBag.Monto</span>
-        </div>
+

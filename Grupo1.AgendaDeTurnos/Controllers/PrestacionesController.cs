@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Grupo1.AgendaDeTurnos.Database;
 using Grupo1.AgendaDeTurnos.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
+    [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
     public class PrestacionesController : Controller
     {
         private readonly AgendaDeTurnosDbContext _context;

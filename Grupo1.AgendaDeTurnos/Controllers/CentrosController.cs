@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Grupo1.AgendaDeTurnos.Database;
 using Grupo1.AgendaDeTurnos.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
@@ -19,14 +20,14 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             _context = context;
         }
 
-        // GET: Centroes
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var agendaDeTurnosDbContext = _context.Centros.Include(c => c.Direccion);
             return View(await agendaDeTurnosDbContext.ToListAsync());
         }
 
-        // GET: Centroes/Details/5
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,15 +46,13 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(centro);
         }
 
-        // GET: Centroes/Create
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Centroes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Nombre")] Centro centro, string calle, int altura, string localidad, string provincia )
@@ -75,7 +74,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
            return View(centro);
         }
 
-        // GET: Centroes/Edit/5
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -97,6 +96,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(centro);
         }
 
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Nombre, Id")] Centro centro, string calle, string localidad, int altura, string provincia)
@@ -132,7 +132,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(centro);
         }
 
-        // GET: Centroes/Delete/5
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -151,7 +151,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             return View(centro);
         }
 
-        // POST: Centroes/Delete/5
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

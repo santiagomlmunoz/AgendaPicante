@@ -10,6 +10,7 @@ using Grupo1.AgendaDeTurnos.Models;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
+
     public class MailsController : Controller
     {
         private readonly AgendaDeTurnosDbContext _context;

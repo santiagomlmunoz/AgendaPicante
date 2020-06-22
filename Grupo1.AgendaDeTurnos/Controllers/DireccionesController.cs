@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Grupo1.AgendaDeTurnos.Database;
 using Grupo1.AgendaDeTurnos.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
+    [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
     public class DireccionesController : Controller
     {
         private readonly AgendaDeTurnosDbContext _context;
@@ -19,7 +21,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             _context = context;
         }
 
-        // GET: Direccions
+       
         public async Task<IActionResult> Index()
         {
             return View(await _context.Direcciones.ToListAsync());

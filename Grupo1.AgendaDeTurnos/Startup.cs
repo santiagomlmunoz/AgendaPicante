@@ -38,9 +38,9 @@ namespace Grupo1.AgendaDeTurnos
             {
 
                 //HAY QUE CAMBIAR LAS RUTAS
-                options.LoginPath = "/Cuenta/Ingresar";
+                options.LoginPath = "/Cuentas/Ingresar";
 
-                options.AccessDeniedPath = "/Cuenta/NoAutorizado";
+                options.AccessDeniedPath = "/Cuentas/NoAutorizado";
 
                 options.LogoutPath = "/Home/Index";
 
