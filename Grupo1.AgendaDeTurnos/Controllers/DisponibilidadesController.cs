@@ -15,7 +15,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
     {
         private readonly AgendaDeTurnosDbContext _context;
 
-        
+
         public DisponibilidadesController(AgendaDeTurnosDbContext context)
         {
             _context = context;
@@ -27,9 +27,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         {
             return View(await _context.Disponibilidades.ToListAsync());
         }
-
-        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
-        public IActionResult AgregarDisponibilidad(int desde, int hasta, DiasEnum dia)
+        public IActionResult AgregarDisponibilidad(int desde, int hasta, DiasEnum dia, string rol)
         {
             Disponibilidad dis = new Disponibilidad(desde, hasta, dia);
             _context.Disponibilidades.Add(dis);

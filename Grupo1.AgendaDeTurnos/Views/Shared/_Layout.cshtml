@@ -34,11 +34,8 @@
                     <ul class="nav navbar-nav pull-xs-right">
 
                         <li class="nav-item">
-                            <a asp-area="" asp-controller="Cuentas" asp-action="Salir">
-                                <button type="button" class="btn btn-danger btn3d">
+                            <a class="btn btn-danger btn3d" asp-area="" asp-controller="Cuentas" asp-action="Salir">
                                     Salir
-                                </button>
-
                             </a>
                         </li>
                     </ul>
@@ -89,6 +86,10 @@
                     </li>
                     <li class="">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Turnos" asp-action="AgendaDiaria">Turnos de hoy</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Profesionales" 
+                           asp-action="Disponibilidades">Administrar disponibilidades</a>
                     </li>
                 }
                 @if (User.IsInRole(nameof(RolesEnum.ADMINISTRADOR)))

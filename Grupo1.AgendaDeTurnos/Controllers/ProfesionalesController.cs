@@ -10,6 +10,7 @@ using Grupo1.AgendaDeTurnos.Models;
 using Grupo1.AgendaDeTurnos.Extensions;
 using Grupo1.AgendaDeTurnos.EnumList;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
@@ -29,7 +30,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 .Include(p => p.Centro)
                 .Include(p => p.Prestacion)
                 .Include(p => p.Turnos);
-            var lista= _context.Profesionales.ToList();
+            var lista = _context.Profesionales.ToList();
             return View(await agendaDeTurnosDbContext.ToListAsync());
         }
 
@@ -71,7 +72,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
 
         public bool verificarExistenciaDeUsuario(string usuario)
         {
-            if(_context.Profesionales.Any(p => p.Username.Equals(usuario)) 
+            if (_context.Profesionales.Any(p => p.Username.Equals(usuario))
                 || _context.Pacientes.Any(p => p.Username.Equals(usuario))
                 || _context.Administradores.Any(a => a.Username.Equals(usuario)))
             {
@@ -90,20 +91,20 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         public async Task<IActionResult> Create([Bind("PrestacionId,CentroId,Id,Nombre,Apellido,Dni,Rol,Username")] Profesional profesional, string password, List<int> listDias)
         {
             string username = profesional.Username;
-            if(verificarExistenciaDeUsuario(username))
+            if (verificarExistenciaDeUsuario(username))
             {
                 ViewBag.Error = "El usuario ya existe";
                 return View();
             }
 
-            
+
             if (ModelState.IsValid)
             {
                 profesional.Username = profesional.Username.ToUpper();
                 profesional.Password = password.Encriptar();
                 profesional.Rol = RolesEnum.PROFESIONAL;
                 profesional.Disponibilidades = new List<Disponibilidad>();
-                foreach(int index in listDias)
+                foreach (int index in listDias)
                 {
                     Disponibilidad dis = await _context.Disponibilidades.FindAsync(index);
                     profesional.Disponibilidades.Add(dis);
@@ -123,11 +124,11 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         }
         public async void borrarDisponibilidadesNoRelacionadas()
         {
-          List<Disponibilidad> disponibilidades =await _context.Disponibilidades
-                .Where(d=>d.IdProfesional == 0)
-            .ToListAsync();
+            List<Disponibilidad> disponibilidades = await _context.Disponibilidades
+                  .Where(d => d.IdProfesional == 0)
+              .ToListAsync();
 
-            foreach(Disponibilidad d in disponibilidades)
+            foreach (Disponibilidad d in disponibilidades)
             {
                 _context.Disponibilidades.Remove(d);
             }
@@ -150,6 +151,44 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             ViewData["CentroId"] = new SelectList(_context.Centros, "Id", "Nombre", profesional.CentroId);
             ViewData["PrestacionId"] = new SelectList(_context.Prestaciones, "Id", "Nombre", profesional.PrestacionId);
             return View(profesional);
+        }
+
+        [Authorize(Roles = nameof(RolesEnum.PROFESIONAL))]
+        public async Task<IActionResult> Disponibilidades()
+        {
+            int profesionalId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var profesional = await _context.Profesionales
+                .Include(p => p.Disponibilidades)
+                .Where(p => p.Id == profesionalId)
+                .SingleOrDefaultAsync();
+            if (profesional == null)
+            {
+                return NotFound();
+            }
+            ViewData["DiasSemana"] = new SelectList(Enum.GetValues(typeof(DiasEnum)).Cast<DiasEnum>());
+            ViewData["Disponibilidades"] = new MultiSelectList(_context.Disponibilidades.Where(d => d.IdProfesional == 0 || d.IdProfesional == profesionalId), 
+                "Id", "Descripcion", 
+                profesional.Disponibilidades.Select(d=>d.Id).ToList());
+        return View(profesional);
+        }
+        public async Task<IActionResult> EditarDisponibilidades(List<int> listDisponibilidades)
+        {
+            int profesionalId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            List<Disponibilidad> disponibilidadesNuevas = new List<Disponibilidad>();
+            foreach (int idDis in listDisponibilidades)
+            {
+                Disponibilidad d = _context.Disponibilidades.Find(idDis);
+                disponibilidadesNuevas.Add(d);
+            }
+            Profesional profesional = await _context.Profesionales
+                .Include(p => p.Disponibilidades)
+                .Where(p => p.Id == profesionalId)
+                .SingleOrDefaultAsync();
+
+            profesional.Disponibilidades = disponibilidadesNuevas;
+            borrarDisponibilidadesNoRelacionadas();
+            return RedirectToAction("Home");
         }
 
         [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
