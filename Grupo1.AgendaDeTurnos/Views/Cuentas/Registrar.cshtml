@@ -1,0 +1,60 @@
+﻿@model Grupo1.AgendaDeTurnos.Models.Usuario
+
+@{
+    ViewData["Title"] = "Registrar";
+}
+
+<h4>Registrar Usuario</h4>
+<hr />
+
+<div class="bounceIn bounceInRight">
+    <div class="text-danger">
+        @ViewBag.Error
+    </div>
+    <form asp-controller="Cuentas" asp-action="Registrar">
+
+        <div class="form-row">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group col-md-4">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" autofocus />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="Apellido" class="control-label"></label>
+                <input asp-for="Apellido" class="form-control" />
+                <span asp-validation-for="Apellido" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="Dni" class="control-label"></label>
+                <input asp-for="Dni" class="form-control" />
+                <span asp-validation-for="Dni" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label label-for="Password" class="control-label">Contraseña:</label>
+                <input name="password" class="form-control" type="password" required />
+            </div>
+        </div>
+
+        <div class="form-group text-right">
+            <input type="submit" value="Registrar Usuario" class="btn btn-success btn3d" />
+
+        </div>
+
+    </form>
+</div>
+
+
+<hr />
+
+<div>
+    <a asp-controller="Home" asp-action="Index">Volver</a>
+</div>
+

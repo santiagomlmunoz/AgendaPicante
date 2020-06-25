@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html>
+@using System.Security.Claims;
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+
+    <nav id="menuT" class="navbar navbar-expand navbar-dark bg-primary">
+        <a href="#menu-toggle" id="menu-toggle" class="navbar-brand">
+            <span class="navbar-toggler-icon"></span>
+        </a>
+        <button class="navbar-toggler" type="button"
+                data-toggle="collapse" data-target="#navbarsTap" aria-controls="navbarsTap" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarsExample02">
+            <ul class="navbar-nav mr-auto">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav pull-xs-right">
+
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="Cuentas" asp-action="Salir">
+                                <button type="button" class="btn btn-danger btn3d">
+                                    Salir
+                                </button>
+
+                            </a>
+                        </li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav pull-xs-right">
+
+                        <li class="nav-item">
+                            <a type="button" class="btn btn-success btn3d" asp-area="" asp-controller="Cuentas" asp-action="Ingresar">
+                                Iniciar Sesión
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a type="button" class="btn btn-info btn3d" asp-area="" asp-controller="Cuentas" asp-action="Registrar">
+                                Registrarse
+                            </a>
+                        </li>
+                    </ul>
+                }
+            </ul>
+            <form class="form-inline my-2 my-md-0"> </form>
+        </div>
+    </nav>
+
+
+    <div id="wrapper" class="toggled">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand"> <a asp-area="" asp-controller="Home" asp-action="Index"> Turnos IRT </a> </li>
+
+
+                @if (User.IsInRole(nameof(RolesEnum.CLIENTE)))
+                {
+                    <li class="">
+                        <a class="nav-link text-light" asp-area="" asp-controller="Turnos" asp-action="MisTurnos">Mis turnos</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link text-light" asp-area="" asp-controller="Turnos" asp-action="NuevoTurno">Solicitar turno</a>
+                    </li>
+                }
+                @if (User.IsInRole(nameof(RolesEnum.PROFESIONAL)))
+                {
+                    <li class="">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Turnos" asp-action="MiAgenda">Mi agenda</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Turnos" asp-action="AgendaDiaria">Turnos de hoy</a>
+                    </li>
+                }
+                @if (User.IsInRole(nameof(RolesEnum.ADMINISTRADOR)))
+                {
+
+                    <li onclick="tap()">
+                        <a class="nav-link text-light" asp-area="" asp-controller="Profesionales" asp-action="Index">Profesionales</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link text-light" asp-area="" asp-controller="Pacientes" asp-action="Index">Pacientes</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link text-light" asp-area="" asp-controller="Administradores" asp-action="Index">Administradores</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link text-light" asp-area="" asp-controller="Centros" asp-action="Index">Centros</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link text-light" asp-area="" asp-controller="Disponibilidades" asp-action="Index">Disponibilidades</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link text-light" asp-area="" asp-controller="Prestaciones" asp-action="Index">Prestaciones</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link text-light" asp-area="" asp-controller="Turnos" asp-action="Index">Turnos</a>
+                    </li>
+
+                }
+
+            </ul>
+        </div> 
+        
+        <div id="page-content-wrapper">
+            <div class="container-fluid"
+                <partial name="_CookieConsentPartial" />
+                <main role="main">
+                    @RenderBody()
+                </main>
+            </div>
+
+        </div> 
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script> <!-- Menu Toggle Script -->
+    <script>
+
+
+        $(function () {
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+
+            $(window).resize(function (e) {
+                if ($(window).width() <= 768) {
+                    $("#wrapper").removeClass("toggled");
+                } else {
+                    $("#wrapper").addClass("toggled");
+                }
+            });
+        });
+
+    </script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
