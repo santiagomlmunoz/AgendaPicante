@@ -64,6 +64,8 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 Localidad = localidad,
                 Provincia = provincia
             };
+            _context.Direcciones.Add(direccion);
+
             centro.Direccion = direccion;
             if (ModelState.IsValid)
             {

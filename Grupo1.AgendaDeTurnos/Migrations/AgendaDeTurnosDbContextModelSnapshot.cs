@@ -84,11 +84,9 @@ namespace Grupo1.AgendaDeTurnos.Migrations
 
                     b.Property<int>("IdProfesional");
 
-                    b.Property<int?>("PorfesionalId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("PorfesionalId");
+                    b.HasIndex("IdProfesional");
 
                     b.ToTable("Disponibilidades");
                 });
@@ -120,7 +118,7 @@ namespace Grupo1.AgendaDeTurnos.Migrations
                     b.Property<int>("DuracionHoras")
                         .HasMaxLength(2);
 
-                    b.Property<decimal>("Monto");
+                    b.Property<int>("Monto");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -158,6 +156,10 @@ namespace Grupo1.AgendaDeTurnos.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Descripcion");
+
+                    b.Property<int>("Estado");
 
                     b.Property<DateTime>("Fecha");
 
@@ -223,6 +225,8 @@ namespace Grupo1.AgendaDeTurnos.Migrations
                 {
                     b.HasBaseType("Grupo1.AgendaDeTurnos.Models.Usuario");
 
+                    b.Property<int>("Edad");
+
                     b.HasDiscriminator().HasValue("Paciente");
                 });
 
@@ -259,9 +263,10 @@ namespace Grupo1.AgendaDeTurnos.Migrations
 
             modelBuilder.Entity("Grupo1.AgendaDeTurnos.Models.Disponibilidad", b =>
                 {
-                    b.HasOne("Grupo1.AgendaDeTurnos.Models.Profesional", "Porfesional")
+                    b.HasOne("Grupo1.AgendaDeTurnos.Models.Profesional", "Profesional")
                         .WithMany("Disponibilidades")
-                        .HasForeignKey("PorfesionalId");
+                        .HasForeignKey("IdProfesional")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Grupo1.AgendaDeTurnos.Models.Mail", b =>

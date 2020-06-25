@@ -35,8 +35,8 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 //    Rol = RolesEnum.ADMINISTRADOR,
 
                 //};
-               // _context.Administradores.Add(admin);
-               //_context.SaveChanges();
+                // _context.Administradores.Add(admin);
+                //_context.SaveChanges();
             }
 
 

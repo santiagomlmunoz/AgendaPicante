@@ -22,14 +22,12 @@ namespace Grupo1.AgendaDeTurnos.Models
 
 
         [Required(ErrorMessage = "El campo es requerido")]
-        [MaxLength(2, ErrorMessage = "La longitud máxima del campo es de 3 caracteres")]
+        
         [Display(Name = "Duracion en horas")]
         public int DuracionHoras { get; set; }
-
         public List<Profesional> Profesionales { get; set; }
 
         [Required(ErrorMessage = "El campo es requerido")]
-        [RegularExpression("[0-99999]*", ErrorMessage = "El monto debe ser numerico")]
         [Display(Name = "Monto")]
         public int Monto { get; set; }
     }

@@ -58,6 +58,8 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,Dni,Rol,Username")] Paciente paciente)
         {
+            paciente.Rol = RolesEnum.CLIENTE;
+
             if (ModelState.IsValid)
             {
                 _context.Add(paciente);

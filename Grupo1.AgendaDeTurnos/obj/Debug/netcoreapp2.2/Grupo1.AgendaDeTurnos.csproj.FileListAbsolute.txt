@@ -85,3 +85,4 @@ C:\Users\ak36594446\Desktop\TPNT\2020-1-BENT1C-1\Grupo1.AgendaDeTurnos\obj\Debug
 C:\Users\ak36594446\Desktop\TPNT\2020-1-BENT1C-1\Grupo1.AgendaDeTurnos\obj\Debug\netcoreapp2.2\Razor\Views\Turnos\MiAgenda.cshtml.g.cs
 C:\Users\ak36594446\Desktop\TPNT\2020-1-BENT1C-1\Grupo1.AgendaDeTurnos\obj\Debug\netcoreapp2.2\Razor\Views\Turnos\AgendaDiaria.cshtml.g.cs
 C:\Users\ak36594446\Desktop\TPNT\2020-1-BENT1C-1\Grupo1.AgendaDeTurnos\obj\Debug\netcoreapp2.2\Razor\Views\Turnos\ComenzarConsulta.cshtml.g.cs
+C:\Users\ak36594446\Desktop\TPNT\2020-1-BENT1C-1\Grupo1.AgendaDeTurnos\obj\Debug\netcoreapp2.2\Razor\Views\Profesionales\Disponibilidades.cshtml.g.cs
