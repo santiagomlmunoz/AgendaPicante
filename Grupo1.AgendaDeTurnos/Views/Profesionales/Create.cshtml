@@ -4,85 +4,124 @@
     ViewData["Title"] = "Crear Profesional";
 }
 
-<h1>@($"{ this.ViewData["Title"] }") </h1>
-<hr />
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-7">
+        <div class="form-group">
+            <h3>Crear Profesional</h3>
+        </div>
+
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="PrestacionId" class="control-label"></label>
-                <select asp-for="PrestacionId" class="form-control" asp-items="ViewBag.PrestacionId"></select>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Apellido" class="control-label"></label>
+                    <input asp-for="Apellido" class="form-control" />
+                    <span asp-validation-for="Apellido" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Nombre" class="control-label"></label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
             </div>
 
-            @{ if (ViewBag.estaLleno == "1")
-                {
-                    <div class="form-group">
-                        <label class="control-label d-block">Disponibilidades</label>
-                        <select multiple="multiple" name="listDias" class="multi-select" asp-items="ViewBag.Disponibilidades"></select>
-                    </div>
-                }
-                else
-                {
-                    <span>Cree sus disponibilidades</span>
-                }
-            }
-            <div class="form-group">
-                <label asp-for="CentroId" class="control-label"></label>
-                <select asp-for="CentroId" class="form-control" asp-items="ViewBag.CentroId"></select>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label asp-for="Dni" class="control-label"></label>
+                    <input asp-for="Dni" class="form-control" />
+                    <span asp-validation-for="Dni" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="Username" class="control-label"></label>
+                    <input asp-for="Username" class="form-control" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="control-label">Password</label>
+                    <input name="password" type="password" class="form-control" />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="PrestacionId" class="control-label"></label>
+                    <select asp-for="PrestacionId" class="form-control" asp-items="ViewBag.PrestacionId"></select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="CentroId" class="control-label"></label>
+                    <select asp-for="CentroId" class="form-control" asp-items="ViewBag.CentroId"></select>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Apellido" class="control-label"></label>
-                <input asp-for="Apellido" class="form-control" />
-                <span asp-validation-for="Apellido" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Dni" class="control-label"></label>
-                <input asp-for="Dni" class="form-control" />
-                <span asp-validation-for="Dni" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Password</label>
-                <input name="password" type="password" class="form-control" />
-            </div>
+
+
             <div class="form-group">
                 <input type="submit" value="@($"{ this.ViewData["Title"] }")" class="btn btn-info btn3d" />
             </div>
+
         </form>
+
     </div>
-    <div class="col col-md-7">
-        <h2>Dias y horario disponible</h2>
-        <div class="alert-danger">@TempData["Error"]</div>
+
+    <div class="col-md-5">
+
+        <div class="form-group">
+            <h3>Disponibilidad del Profesional</h3>
+        </div>
 
         <form asp-controller="Disponibilidades" asp-action="AgregarDisponibilidad">
-            <label class="control-label">Dia</label>
-            <select name="dia" class="form-control" asp-items="ViewBag.DiasSemana"></select>
+            <div class="alert-danger">@TempData["Error"]</div>
+            @{ if (ViewBag.estaLleno != "1")
+                {
+                    <div class="form-group">
+                        <div class="alert alert-warning" role="alert">
+                            Cree sus Disponibilidades
+                        </div>
+                    </div>
 
+                }
+            }
+          
 
+                <div class="form-group">
+                   
+                    <div class="form-group">
+                        <label class="control-label">Dia</label>
+                        <select name="dia" class="form-control" asp-items="ViewBag.DiasSemana"></select>
+                    </div>
 
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Desde</label>
+                            <input min="0" max="24" type="number" name="desde" class="form-control" />
+                        </div>
 
-            <label>Desde</label>
-            <input min="0" max="24" type="number" name="desde" />
-            <label>Hasta</label>
-            <input min="0" max="24" type="number" name="hasta" />
-            <input type="submit" />
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Hasta</label>
+                            <input min="0" max="24" type="number" name="hasta" class="form-control" />
+                        </div>
+                    </div>
 
+                </div>
 
+                <div class="form-group">
+                    @{ if (ViewBag.estaLleno == "1")
+                        {
+                            <div class="form-group">
+                                <label class="control-label d-block">La Disponibilidad del profesional es:</label>
+                                <select multiple class="form-control" name="listDias" asp-items="ViewBag.Disponibilidades" rows="3"></select>
+                            </div>
+                        }
+
+                    }
+                </div>
+            
+            <input type="submit" class="btn btn-success btn3d" value="Agregar Disponibilidad" />
         </form>
     </div>
-</div>
 
+</div>
 
 <div>
     <a asp-action="Index">Volver</a>

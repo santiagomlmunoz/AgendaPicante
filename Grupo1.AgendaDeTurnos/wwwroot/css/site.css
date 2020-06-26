@@ -1,4 +1,11 @@
-﻿body {}
+﻿input {
+    background-color: #9b9b9b!important;
+    color: #fff;
+}
+body {
+    background-color: #303030!important;
+    color: whitesmoke!important;
+}
 
 table {
     text-align: center!important;
@@ -113,11 +120,12 @@ dl.row>dd+dt {
     line-height: 40px;
 }
 
-.sidebar-nav li a {
-    display: block;
-    text-decoration: none;
-    color: #999999;
-}
+    .sidebar-nav li a {
+        display: block;
+        text-decoration: none;
+        color: white !important
+        ;
+    }
 
 .sidebar-nav li a:hover {
     text-decoration: none;
@@ -137,7 +145,7 @@ dl.row>dd+dt {
 }
 
 .sidebar-nav>.sidebar-brand a {
-    color: #999999;
+    color: white;
 }
 
 .sidebar-nav>.sidebar-brand a:hover {
@@ -186,6 +194,7 @@ dl.row>dd+dt {
     box-shadow: 0 0 0 1px #31c300 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #5eb924, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
     background-color: #78d739;
 }
+
 
 .btn3d.btn-success:active,
 .btn3d.btn-success.active {

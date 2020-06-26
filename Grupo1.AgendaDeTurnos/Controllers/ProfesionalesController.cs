@@ -56,9 +56,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
 
         [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public IActionResult Create()
-
         {
-
             List<Disponibilidad> disponibilidades = _context.Disponibilidades.Where(d => d.IdProfesional == 0).ToList();
             ViewData["Disponibilidades"] = new MultiSelectList(disponibilidades, "Id", "Descripcion");
             ViewData["DiasSemana"] = new SelectList(Enum.GetValues(typeof(DiasEnum)).Cast<DiasEnum>());
@@ -68,8 +66,6 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             {
                 ViewBag.estaLleno = "1";
             }
-
-
             return View();
         }
 
