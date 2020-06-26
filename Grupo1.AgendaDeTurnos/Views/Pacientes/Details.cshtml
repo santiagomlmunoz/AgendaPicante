@@ -1,14 +1,13 @@
 ﻿@model Grupo1.AgendaDeTurnos.Models.Paciente
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalle de Paciente";
 }
 
-<h1>Detalle</h1>
+    <h1>@($"{ this.ViewData["Title"] }") </h1>
 
 <div>
-    <h4>Paciente</h4>
-    <h1>@($"{ this.ViewData["Title"] }") </h1>
+    
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Nombre)
