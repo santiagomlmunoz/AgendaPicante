@@ -35,8 +35,8 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 //    Rol = RolesEnum.ADMINISTRADOR,
 
                 //};
-                // _context.Administradores.Add(admin);
-                //_context.SaveChanges();
+               // _context.Administradores.Add(admin);
+               //_context.SaveChanges();
             }
 
 
@@ -118,42 +118,42 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             Provincia = "BUENOS AIRES"
         };
 
-        //var tel1 = new Telefono
-        //{
-        //    NumeroCelular = "111122222",
-        //    TelefonoAlternativo = "456456456"
-        //};
-        //var tel2 = new Telefono
-        //{
-        //    NumeroCelular = "1111222223",
-        //    TelefonoAlternativo = "4564564563"
-        //};
-        //var tel3 = new Telefono
-        //{
-        //    NumeroCelular = "1113332223",
-        //    TelefonoAlternativo = "45634564563"
-        //};
-        //var tel4 = new Telefono
-        //{
-        //    NumeroCelular = "1111222223",
-        //    TelefonoAlternativo = "4564564563"
-        //};
-        //var mail1 = new Mail
-        //{
-        //    Descripcion = "abc@abc.com"
-        //};
-        //var mail2 = new Mail
-        //{
-        //    Descripcion = "abc@abc2.com"
-        //};
-        //var mail3 = new Mail
-        //{
-        //    Descripcion = "abc@abc3.com"
-        //};
-        //var mail4 = new Mail
-        //{
-        //    Descripcion = "abc@abc4.com"
-        //};
+        var tel1 = new Telefono
+        {
+            NumeroCelular = "111122222",
+            TelefonoAlternativo = "456456456"
+        };
+        var tel2 = new Telefono
+        {
+            NumeroCelular = "1111222223",
+            TelefonoAlternativo = "4564564563"
+        };
+        var tel3 = new Telefono
+        {
+            NumeroCelular = "1113332223",
+            TelefonoAlternativo = "45634564563"
+        };
+        var tel4 = new Telefono
+        {
+            NumeroCelular = "1111222223",
+            TelefonoAlternativo = "4564564563"
+        };
+        var mail1 = new Mail
+        {
+            Descripcion = "abc@abc.com"
+        };
+        var mail2 = new Mail
+        {
+            Descripcion = "abc@abc2.com"
+        };
+        var mail3 = new Mail
+        {
+            Descripcion = "abc@abc3.com"
+        };
+        var mail4 = new Mail
+        {
+            Descripcion = "abc@abc4.com"
+        };
 
 
         var profesional = new Profesional
@@ -164,9 +164,9 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             Dni = "123123123",
             Prestacion = prestacion2,
             Rol = RolesEnum.PROFESIONAL,
-            
+            Mails = new List<Mail>(),
             Turnos = new List<Turno>(),
-            
+            Telefonos = new List<Telefono>(),
             Direcciones = new List<Direccion>(),
             Disponibilidades = new List<Disponibilidad>(),
             Username = "ELPROFE",
@@ -180,9 +180,9 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 Dni = "999999999",
                 Prestacion = prestacion,
                 Rol = RolesEnum.PROFESIONAL,
-                
+                Mails = new List<Mail>(),
                 Turnos = new List<Turno>(),
-                
+                Telefonos = new List<Telefono>(),
                 Direcciones = new List<Direccion>(),
                 Disponibilidades = new List<Disponibilidad>(),
                 Username = "PROFE2",
@@ -194,8 +194,8 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             Apellido = "Wallace",
             Dni = "00000000001",
             Rol = RolesEnum.ADMINISTRADOR,
-            
-            
+            Mails = new List<Mail>(),
+            Telefonos = new List<Telefono>(),
             Direcciones = new List<Direccion>(),
             Username = "SOYADMIN",
             Password = "soyAdmin".Encriptar()
@@ -207,8 +207,8 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             Dni = "123123123",
             Rol = RolesEnum.CLIENTE,
             Direcciones = new List<Direccion>(),
-            
-            
+            Mails = new List<Mail>(),
+            Telefonos = new List<Telefono>(),
             Turnos = new List<Turno>(),
             Username = "ELPEPE",
             Password = "1234".Encriptar()
@@ -220,26 +220,26 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             Dni = "123123123",
             Rol = RolesEnum.CLIENTE,
             Direcciones = new List<Direccion>(),
-            
-            
+            Mails = new List<Mail>(),
+            Telefonos = new List<Telefono>(),
             Turnos = new List<Turno>(),
             Username = "ELPACIENT",
             Password = "soyPaciente".Encriptar()
         };
-        //administrador.Mails.Add(mail4);
-        // administrador.Telefonos.Add(tel4);
+        administrador.Mails.Add(mail4);
+         administrador.Telefonos.Add(tel4);
          administrador.Direcciones.Add(direAdmin);
 
-         //profesional.Mails.Add(mail1);
-         //profesional.Telefonos.Add(tel1);            
+         profesional.Mails.Add(mail1);
+         profesional.Telefonos.Add(tel1);            
          profesional.Direcciones.Add(direProf);
             profesional.Disponibilidades.Add(disponibilidad);
 
-         //paciente.Telefonos.Add(tel2);
-         //paciente.Mails.Add(mail2);
-         //paciente2.Mails.Add(mail3);
+         paciente.Telefonos.Add(tel2);
+         paciente.Mails.Add(mail2);
+         paciente2.Mails.Add(mail3);
          paciente.Direcciones.Add(direPaciente1);
-         //paciente2.Telefonos.Add(tel3);
+         paciente2.Telefonos.Add(tel3);
          paciente2.Direcciones.Add(direPaciente2);
 
          _context.Pacientes.Add(paciente);

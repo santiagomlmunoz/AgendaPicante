@@ -38,12 +38,12 @@ namespace Grupo1.AgendaDeTurnos.Models
         public List<Direccion> Direcciones { get; set; }
 
 
-        //[Display(Name = "Telefonos")]
-        //public List<Telefono> Telefonos { get; set; }
+        [Display(Name = "Telefonos")]
+        public List<Telefono> Telefonos { get; set; }
 
 
-        //[Display(Name = "Mails")]
-        //public List<Mail> Mails { get; set; }
+        [Display(Name = "Mails")]
+        public List<Mail> Mails { get; set; }
 
 
         [Display(Name = "Rol")]
@@ -59,6 +59,18 @@ namespace Grupo1.AgendaDeTurnos.Models
         public byte[] Password { get; set; }
 
 
+
+
+        //public Usuario(string nombre, string apellido, string dni, Rol rol)
+        //{
+        //    this.Nombre = nombre;
+        //    this.Apellido = apellido;
+        //    this.Dni = dni;
+        //    this.Rol = rol;
+        //    this.Direcciones = new List<Direccion>();
+        //    this.Telefonos = new List<Telefono>();
+        //    this.Mails = new List<Mail>();
+        //}
     }
 
 }

@@ -49,7 +49,7 @@ namespace Grupo1.AgendaDeTurnos
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            //services.AddDbContext<AgendaDeTurnosDbContext>(options => options.UseSqlServer("Server = SQL-07; Database = AGENDA_TURNOS; User Id = sa; Password = sqlPass;"));
+      //      services.AddDbContext<AgendaDeTurnosDbContext>(options => options.UseSqlServer("Server = SQL-07; Database = AGENDA_TURNOS; User Id = sa; Password = sqlPass;"));
 
             services.AddDbContext<AgendaDeTurnosDbContext>(options => options.UseInMemoryDatabase("unaBaseDeDatos"));
 

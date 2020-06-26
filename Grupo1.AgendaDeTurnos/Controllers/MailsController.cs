@@ -7,27 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Grupo1.AgendaDeTurnos.Database;
 using Grupo1.AgendaDeTurnos.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
-    [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
-    public class PacientesController : Controller
+
+    public class MailsController : Controller
     {
         private readonly AgendaDeTurnosDbContext _context;
 
-        public PacientesController(AgendaDeTurnosDbContext context)
+        public MailsController(AgendaDeTurnosDbContext context)
         {
             _context = context;
         }
 
-        // GET: Pacientes
+        // GET: Mails
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pacientes.ToListAsync());
+            var agendaDeTurnosDbContext = _context.Mails.Include(m => m.Usuario);
+            return View(await agendaDeTurnosDbContext.ToListAsync());
         }
 
-        // GET: Pacientes/Details/5
+        // GET: Mails/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,39 +35,42 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var paciente = await _context.Pacientes
+            var mail = await _context.Mails
+                .Include(m => m.Usuario)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (paciente == null)
+            if (mail == null)
             {
                 return NotFound();
             }
 
-            return View(paciente);
+            return View(mail);
         }
 
-        // GET: Pacientes/Create
+        // GET: Mails/Create
         public IActionResult Create()
         {
+            ViewData["IdUsuario"] = new SelectList(_context.Set<Usuario>(), "Id", "Apellido");
             return View();
         }
 
-        // POST: Pacientes/Create
+        // POST: Mails/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,Dni,Rol,Username")] Paciente paciente)
+        public async Task<IActionResult> Create([Bind("Id,Descripcion,IdUsuario")] Mail mail)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(paciente);
+                _context.Add(mail);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(paciente);
+            ViewData["IdUsuario"] = new SelectList(_context.Set<Usuario>(), "Id", "Apellido", mail.IdUsuario);
+            return View(mail);
         }
 
-        // GET: Pacientes/Edit/5
+        // GET: Mails/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,22 +78,23 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var paciente = await _context.Pacientes.FindAsync(id);
-            if (paciente == null)
+            var mail = await _context.Mails.FindAsync(id);
+            if (mail == null)
             {
                 return NotFound();
             }
-            return View(paciente);
+            ViewData["IdUsuario"] = new SelectList(_context.Set<Usuario>(), "Id", "Apellido", mail.IdUsuario);
+            return View(mail);
         }
 
-        // POST: Pacientes/Edit/5
+        // POST: Mails/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Apellido,Dni,Rol,Username")] Paciente paciente)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Descripcion,IdUsuario")] Mail mail)
         {
-            if (id != paciente.Id)
+            if (id != mail.Id)
             {
                 return NotFound();
             }
@@ -99,12 +103,12 @@ namespace Grupo1.AgendaDeTurnos.Controllers
             {
                 try
                 {
-                    _context.Update(paciente);
+                    _context.Update(mail);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PacienteExists(paciente.Id))
+                    if (!MailExists(mail.Id))
                     {
                         return NotFound();
                     }
@@ -115,10 +119,11 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(paciente);
+            ViewData["IdUsuario"] = new SelectList(_context.Set<Usuario>(), "Id", "Apellido", mail.IdUsuario);
+            return View(mail);
         }
 
-        // GET: Pacientes/Delete/5
+        // GET: Mails/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,30 +131,31 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var paciente = await _context.Pacientes
+            var mail = await _context.Mails
+                .Include(m => m.Usuario)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (paciente == null)
+            if (mail == null)
             {
                 return NotFound();
             }
 
-            return View(paciente);
+            return View(mail);
         }
 
-        // POST: Pacientes/Delete/5
+        // POST: Mails/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var paciente = await _context.Pacientes.FindAsync(id);
-            _context.Pacientes.Remove(paciente);
+            var mail = await _context.Mails.FindAsync(id);
+            _context.Mails.Remove(mail);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PacienteExists(int id)
+        private bool MailExists(int id)
         {
-            return _context.Pacientes.Any(e => e.Id == id);
+            return _context.Mails.Any(e => e.Id == id);
         }
     }
 }

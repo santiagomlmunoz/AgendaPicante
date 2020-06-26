@@ -90,7 +90,6 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PrestacionId,CentroId,Id,Nombre,Apellido,Dni,Rol,Username")] Profesional profesional, string password, List<int> listDias)
         {
-            profesional.Rol = RolesEnum.PROFESIONAL;
             string username = profesional.Username;
             if (verificarExistenciaDeUsuario(username))
             {

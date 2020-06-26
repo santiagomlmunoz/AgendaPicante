@@ -11,20 +11,19 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Grupo1.AgendaDeTurnos.Controllers
 {
-    public class CentrosController : Controller
+    public class AdministradoresController : Controller
     {
         private readonly AgendaDeTurnosDbContext _context;
 
-        public CentrosController(AgendaDeTurnosDbContext context)
+        public AdministradoresController(AgendaDeTurnosDbContext context)
         {
             _context = context;
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         public async Task<IActionResult> Index()
         {
-            var agendaDeTurnosDbContext = _context.Centros.Include(c => c.Direccion);
-            return View(await agendaDeTurnosDbContext.ToListAsync());
+            return View(await _context.Administradores.ToListAsync());
         }
 
         [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
@@ -35,15 +34,14 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var centro = await _context.Centros
-                .Include(c => c.Direccion)
+            var administrador = await _context.Administradores
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (centro == null)
+            if (administrador == null)
             {
                 return NotFound();
             }
 
-            return View(centro);
+            return View(administrador);
         }
 
         [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
@@ -55,23 +53,15 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Nombre")] Centro centro, string calle, int altura, string localidad, string provincia )
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,Dni,Rol,Username")] Administrador administrador)
         {
-            Direccion direccion = new Direccion()
-            {
-                Calle = calle,
-                Altura = altura,
-                Localidad = localidad,
-                Provincia = provincia
-            };
-            centro.Direccion = direccion;
             if (ModelState.IsValid)
             {
-                _context.Add(centro);
+                _context.Add(administrador);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-           return View(centro);
+            return View(administrador);
         }
 
         [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
@@ -82,43 +72,34 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var centro = await _context.Centros
-                .Include(c =>c.Direccion)
-                .FirstOrDefaultAsync(c =>c.Id == id);
-            if (centro == null)
+            var administrador = await _context.Administradores.FindAsync(id);
+            if (administrador == null)
             {
                 return NotFound();
             }
-            ViewBag.calle = centro.Direccion.Calle;
-            ViewBag.altura = centro.Direccion.Altura;
-            ViewBag.localidad = centro.Direccion.Localidad;
-            ViewBag.provincia = centro.Direccion.Provincia;
-            return View(centro);
+            return View(administrador);
         }
 
         [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Nombre, Id")] Centro centro, string calle, string localidad, int altura, string provincia)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Apellido,Dni,Rol,Username")] Administrador administrador)
         {
+            if (id != administrador.Id)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                    Direccion direccion = new Direccion()
-                    {
-                        Calle = calle,
-                        Altura = altura,
-                        Localidad = localidad,
-                        Provincia = provincia
-                    };
-                    centro.Direccion = direccion;
-                    _context.Update(centro);
+                    _context.Update(administrador);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CentroExists(centro.Id))
+                    if (!AdministradorExists(administrador.Id))
                     {
                         return NotFound();
                     }
@@ -129,7 +110,7 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(centro);
+            return View(administrador);
         }
 
         [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
@@ -140,15 +121,14 @@ namespace Grupo1.AgendaDeTurnos.Controllers
                 return NotFound();
             }
 
-            var centro = await _context.Centros
-                .Include(c => c.Direccion)
+            var administrador = await _context.Administradores
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (centro == null)
+            if (administrador == null)
             {
                 return NotFound();
             }
 
-            return View(centro);
+            return View(administrador);
         }
 
         [Authorize(Roles = nameof(RolesEnum.ADMINISTRADOR))]
@@ -156,15 +136,15 @@ namespace Grupo1.AgendaDeTurnos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var centro = await _context.Centros.FindAsync(id);
-            _context.Centros.Remove(centro);
+            var administrador = await _context.Administradores.FindAsync(id);
+            _context.Administradores.Remove(administrador);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CentroExists(int id)
+        private bool AdministradorExists(int id)
         {
-            return _context.Centros.Any(e => e.Id == id);
+            return _context.Administradores.Any(e => e.Id == id);
         }
     }
 }

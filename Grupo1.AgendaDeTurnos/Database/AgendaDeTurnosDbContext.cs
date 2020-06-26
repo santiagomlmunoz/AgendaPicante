@@ -20,7 +20,7 @@ namespace Grupo1.AgendaDeTurnos.Database
 
         public DbSet<Disponibilidad> Disponibilidades { get; set; }
 
-        //public DbSet<Mail> Mails { get; set; }
+        public DbSet<Mail> Mails { get; set; }
 
         public DbSet<Paciente> Pacientes { get; set; }
 
@@ -29,7 +29,7 @@ namespace Grupo1.AgendaDeTurnos.Database
         public DbSet<Profesional> Profesionales { get; set; }
 
 
-        //public DbSet<Telefono> Telefonos { get; set; }
+        public DbSet<Telefono> Telefonos { get; set; }
 
         public DbSet<Turno> Turnos { get; set; }
 
