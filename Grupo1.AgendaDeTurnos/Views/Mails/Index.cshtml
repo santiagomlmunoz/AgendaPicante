@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Grupo1.AgendaDeTurnos.Models.Mail>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Listado de Emails";
 }
 
-    <h1>Listado de Emails</h1>
+    <h1>@($"{ this.ViewData["Title"] }") </h1>
 
 <p>
     <a asp-action="Create">Nuevo</a>

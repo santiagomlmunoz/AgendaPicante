@@ -1,13 +1,14 @@
 ﻿@model Grupo1.AgendaDeTurnos.Models.Turno
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Turno";
 }
 
-<h1>Editar</h1>
 
-<h4>Turno</h4>
+<h1>@($"{ this.ViewData["Title"] }") </h1>
+
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">

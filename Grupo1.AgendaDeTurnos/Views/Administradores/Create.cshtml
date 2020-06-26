@@ -1,13 +1,11 @@
 ﻿@model Grupo1.AgendaDeTurnos.Models.Administrador
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Administrador";
 }
 
-<h1>Create</h1>
+<h1>@($"{ this.ViewData["Title"] }") </h1>
 
-<h4>Administrador</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -38,7 +36,7 @@
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="@($"{ this.ViewData["Title"] }")" class="btn btn-info btn3d" />
             </div>
         </form>
     </div>

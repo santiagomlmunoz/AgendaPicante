@@ -1,15 +1,15 @@
 ﻿@model Grupo1.AgendaDeTurnos.Models.Centro
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Eliminar Centro";
 }
 
-<h1>Eliminar Registro</h1>
+    <h1>@($"{ this.ViewData["Title"] }") </h1>
 
 <h3>¿Seguro qué desea eliminar el Registro?</h3>
 <div>
-    <h4>Centro</h4>
-    <hr />
+    
+    
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Nombre)
